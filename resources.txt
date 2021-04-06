@@ -1,0 +1,12 @@
+USER (user_id, user_name, user_mobile, user_email, user_role_id, is_deleted)
+LOGIN(user_id, username, password, is_deleted)
+ROLE (role_id, role_name, is_deleted)
+
+CATEGORY(category_id, category_name, is_deleted)
+PRODUCT(product_id, product_name, product_type, is_deleted)
+INVENTORY(inventory_id, product_id, product_price, product_qty, product_exp, is_deleted)
+FOOD(food_id, food_name, food_desc, food_price, inserted_at, is_deleted)
+
+OREDR(order_id, customer_id, item_type, item_id, item_qty, ordered_at)
+
+TRANSACTION(transcation_id, cutomer_id, billed_at, amount, is_deleted)
