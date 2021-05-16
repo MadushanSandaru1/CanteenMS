@@ -4,23 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c127fe76-7a97-43d5-a968-c14d836ebb27" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/CanteenMS.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/canteenMS/src/main/java/com/example/entities/Category.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/canteenMS/src/main/java/com/example/entities/Food.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/canteenMS/src/main/java/com/example/entities/Inventory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/canteenMS/src/main/java/com/example/entities/Login.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/canteenMS/src/main/java/com/example/entities/Order.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/canteenMS/src/main/java/com/example/entities/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/canteenMS/src/main/java/com/example/entities/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/canteenMS/src/main/java/com/example/entities/Transaction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/canteenMS/src/main/java/com/example/entities/User.java" afterDir="false" />
-    </list>
+    <list default="true" id="c127fe76-7a97-43d5-a968-c14d836ebb27" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,19 +39,11 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="CanteenMsApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="canteenMS" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.canteenMS.CanteenMsApplication" />
@@ -85,6 +61,9 @@
       <option name="presentableId" value="Default" />
       <updated>1619003935762</updated>
       <workItem from="1619003939620" duration="2407000" />
+      <workItem from="1619424463471" duration="269000" />
+      <workItem from="1619424786469" duration="152000" />
+      <workItem from="1621186890534" duration="171000" />
     </task>
     <servers />
   </component>
@@ -101,5 +80,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
