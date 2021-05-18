@@ -1,0 +1,221 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>FOT Canteen</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ======= Top Bar ======= -->
+<div id="topbar" class="d-flex align-items-center fixed-top">
+  <div class="container d-flex justify-content-center justify-content-md-between">
+
+    <div class="contact-info d-flex align-items-center">
+      <i class="bi bi-phone d-flex align-items-center"><span>+94 77 163 7551</span></i>
+    </div>
+
+    <div class="languages d-none d-md-flex align-items-center">
+      <ul>
+        <li>Hi,</li>
+        <li><a href="profile.html">Madushan Sandaruwan</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top d-flex align-items-cente">
+  <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
+
+    <h1 class="logo me-auto me-lg-0"><a href="../index.html">FOT Canteen</a></h1>
+    <!-- Uncomment below if you prefer to use an image logo -->
+    <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+    <nav id="navbar" class="navbar order-last order-lg-0">
+      <ul>
+
+        <!-- for customer -->
+        <li><a class="nav-link scrollto" th:href="@{/}">Home</a></li>
+        <li><a class="nav-link scrollto" th:href="@{/menu}">Menu</a></li>
+        <li><a class="nav-link scrollto" th:href="@{/orders}">My Order</a></li>
+        <li><a class="nav-link scrollto active" th:href="@{/profile}">Profile</a></li>
+
+        <!-- for owner -->
+        <li><a class="nav-link scrollto" href="dashboard.html">Dashboard</a></li>
+
+      </ul>
+      <i class="bi bi-list mobile-nav-toggle"></i>
+    </nav><!-- .navbar -->
+    <a th:href="@{/login}" class="book-a-table-btn scrollto d-none d-lg-flex">Log in</a>
+
+  </div>
+</header><!-- End Header -->
+
+<main id="main">
+  <section class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2></h2>
+        <ol>
+          <li><a href="../index.html">Home</a></li>
+          <li>Profile</li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+
+    <!-- ======= Book A Table Section ======= -->
+    <section id="book-a-table" class="book-a-table mb-md-5">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <p>Profile</p>
+        </div>
+
+        <form action="" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+          <div class="row">
+            <div class="col-lg-4 col-md-6 form-group">
+              <input type="text" name="id_no" class="form-control" id="id_no" placeholder="ID Number" readonly>
+              <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6 form-group">
+              <input type="text" name="name" class="form-control" id="name" placeholder="Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+              <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6 form-group">
+              <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone Number" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+              <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6 form-group mt-lg-3">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Email Address" data-rule="email" data-msg="Please enter a valid email">
+              <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6 form-group mt-lg-3">
+              <input type="text" class="form-control" name="room_id" id="room_no" placeholder="Room Number" data-rule="minlen:3" data-msg="Please enter a correct room ID">
+              <div class="validate"></div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
+          </div>
+          <div class="text-center"><button type="submit">Update</button></div>
+        </form>
+
+        <form action="" method="post" role="form" class="php-email-form mt-5" data-aos="fade-up" data-aos-delay="100">
+          <hr>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-6 form-group mt-3">
+              <input type="password" name="old_pwd" class="form-control" id="old_pwd" placeholder="Old Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars">
+              <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6 form-group mt-3">
+              <input type="password" name="new_pwd" class="form-control" id="new_pwd" placeholder="New Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars">
+              <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6 form-group mt-3">
+              <input type="password" name="confirm_pwd" class="form-control" id="confirm_pwd" placeholder="Confirm Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars">
+              <div class="validate"></div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
+          </div>
+          <div class="text-center"><button type="submit">Update</button></div>
+        </form>
+
+      </div>
+    </section><!-- End Book A Table Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-12 col-md-12 justify-content-center">
+            <div class="footer-info">
+
+              <div class="row gy-4 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
+                <div class="col-xl-2 col-md-2 col-4">
+                  <div>
+                    <img src="../assets/img/logo.png" width="80%">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>FOT Canteen</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/restaurantly-restaurant-template/ -->
+        Designed by <a href="">Team Semicolon</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/custom.js"></script>
+
+</body>
+
+</html>
