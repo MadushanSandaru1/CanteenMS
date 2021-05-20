@@ -1,6 +1,27 @@
-USER (user_id, user_name, user_mobile, user_email, user_role_id, is_deleted)
-LOGIN(user_id, username, password, is_deleted)
-ROLE (role_id, role_name, is_deleted)
+User (
+	id INTEGER,
+	registered_no String,
+	name String,
+	mobile String,
+	email String,
+	role_id int,
+	room_no String,
+	is_deleted int
+)
+
+Login(
+	id INTEGER,
+	password String
+)
+
+Role (
+	id INTEGER,
+	role_name String
+)
+
+
+
+
 
 CATEGORY(category_id, category_name, is_deleted)
 PRODUCT(product_id, product_name, product_type, is_deleted)
