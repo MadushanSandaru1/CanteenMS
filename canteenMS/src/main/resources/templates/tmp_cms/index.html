@@ -49,7 +49,7 @@
       <div class="languages d-none d-md-flex align-items-center">
         <ul>
           <li>Hi,</li>
-          <li><a href="views/profile.html">Madushan Sandaruwan</a></li>
+          <li><a href="views/profile.html"><p th:text="${account}"></p></a></li>
         </ul>
       </div>
     </div>
@@ -116,18 +116,22 @@
         <div class="row justify-content-center">
 
           <div class="col-md-6">
-
-            <form action="" method="post" role="form" class="php-email-form">
+            <div th:if="${param.login_error}" class="alert alert-danger text-center">
+              Invalid user information please try again!.
+            </div>
+            <form th:action="@{/loginAccount}" method="post">
               <div class="form-group">
-                <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+                <input type="text" class="form-control" name="username"  placeholder="Username" required>
               </div>
               <div class="form-group mt-3">
-                <input type="password" class="form-control" name="pwd" id="pwd" placeholder="Password" required>
+                <input type="password" class="form-control" name="pwd"  placeholder="Password" required>
               </div>
               <div class="my-3">
                 <div class="error-message"></div>
               </div>
-              <div class="text-center"><button type="submit">Log in</button></div>
+              <div class="form-group">
+                <div class="text-center"><button type="submit" class="log_btn">Log in</button></div>
+              </div>
             </form>
 
           </div>

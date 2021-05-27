@@ -1855,3 +1855,12 @@ th {
   font-size: 13px;
   color: #fff;
 }
+
+.log_btn{
+  width: 100px;
+  height: 40px;
+  color: #cda45e;
+  background-color: black;
+  border: 1px solid  #cda45e;
+  border-radius: 10px;
+}

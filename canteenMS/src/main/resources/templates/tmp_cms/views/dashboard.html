@@ -37,13 +37,13 @@
     <div class="container d-flex justify-content-center justify-content-md-between">
 
       <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-phone d-flex align-items-center"><span>+1 5589 55488 55</span></i>
+        <i class="bi bi-phone d-flex align-items-center"><span th:text="${user_details.get(3)}"></span></i>
       </div>
 
       <div class="languages d-none d-md-flex align-items-center">
         <ul>
           <li>Hi,</li>
-          <li><a href="profile.html">Madushan Sandaruwan</a></li>
+          <li><a href="profile.html"><p th:text="${user_details.get(2)}"></p></a></li>
         </ul>
       </div>
     </div>
@@ -67,11 +67,11 @@
           <li><a class="nav-link scrollto" th:href="@{/inventory}">Inventory</a></li>
           <li><a class="nav-link scrollto" th:href="@{/meal}">Meals</a></li>
           <li><a class="nav-link scrollto" th:href="@{/profile}">Profile</a></li>
-
+          <li><a class="nav-link scrollto" th:href="@{/logout}">Log out</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-      <a th:href="@{/logout}" class="glightbox book-a-table-btn scrollto d-none d-lg-flex">Log out</a>
+<!--      <a th:href="@{/logout}" class="glightbox book-a-table-btn scrollto d-none d-lg-flex">Log out</a>-->
 
     </div>
   </header><!-- End Header -->
