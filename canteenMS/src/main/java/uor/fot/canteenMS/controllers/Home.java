@@ -32,14 +32,27 @@ public class Home {
     }
 
     @RequestMapping(path = "/menu")
-    public String getMenuPage(HttpSession session)
+    public String getMenuPage(HttpSession session,Model model)
     {
+        List<String> users = (List<String>) session.getAttribute("USER_SESSION");
+        if (users == null)
+        {
+            model.addAttribute("account","");
+            return "tmp_cms/views/menu";
+        }
         return "tmp_cms/views/menu";
     }
 
     @RequestMapping(path = "/orders")
-    public  String getOrdersPage(HttpSession session)
+    public  String getOrdersPage(HttpSession session,Model model)
     {
+        List<String> users = (List<String>) session.getAttribute("USER_SESSION");
+        if (users == null)
+        {
+            //users = new ArrayList<>();
+            return "redirect:/login";
+        }
+        model.addAttribute("user_details",users);
         return "tmp_cms/views/orders";
     }
 
@@ -86,20 +99,41 @@ public class Home {
     }
 
     @RequestMapping(path = "/product")
-    public  String getProductPage(HttpSession session)
+    public  String getProductPage(HttpSession session,Model model)
     {
+        List<String> users = (List<String>) session.getAttribute("USER_SESSION");
+        if (users == null)
+        {
+            //users = new ArrayList<>();
+            return "redirect:/login";
+        }
+        model.addAttribute("user_details",users);
         return "tmp_cms/views/product";
     }
 
     @RequestMapping(path = "/inventory")
-    public  String getInventoryPage(HttpSession session)
+    public  String getInventoryPage(HttpSession session,Model model)
     {
+        List<String> users = (List<String>) session.getAttribute("USER_SESSION");
+        if (users == null)
+        {
+            //users = new ArrayList<>();
+            return "redirect:/login";
+        }
+        model.addAttribute("user_details",users);
         return "tmp_cms/views/inventory";
     }
 
     @RequestMapping(path = "/meal")
-    public  String getMealPage(HttpSession session)
+    public  String getMealPage(HttpSession session,Model model)
     {
+        List<String> users = (List<String>) session.getAttribute("USER_SESSION");
+        if (users == null)
+        {
+            //users = new ArrayList<>();
+            return "redirect:/login";
+        }
+        model.addAttribute("user_details",users);
         return "tmp_cms/views/meal";
     }
 
