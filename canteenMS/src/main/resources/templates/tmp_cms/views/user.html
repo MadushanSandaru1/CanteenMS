@@ -97,35 +97,42 @@
           <p class="mb-5">User Account</p>
           <h2>Add New User Account</h2>
         </div>
-
-        <form action="" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+        <div th:if="${param.error}" class="alert alert-danger text-center">
+          Sorry unable to create account please try again!.
+        </div>
+        <div th:if="${param.done}" class="alert alert-success text-center">
+          User account created successfully!.
+        </div>
+        <div th:if="${param.delete_error}" class="alert alert-danger text-center">
+          Sorry unable to delete account please try again!.
+        </div>
+        <div th:if="${param.delete_done}" class="alert alert-success text-center">
+          User account deleted successfully!.
+        </div>
+        <form th:action="@{/saveUser}" method="post"  >
           <div class="row">
             <div class="col-lg-4 col-md-6 form-group">
-              <input type="text" name="user_id" class="form-control" id="user_id" placeholder="User ID">
+<!--              <input type="hidden" name="u_id" th:value="${user_last_id}">-->
+              <input type="text" name="user_id" class="form-control text_filed" id="user_id" placeholder="User Registration Number" >
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group">
-              <input type="text" name="user_name" class="form-control" id="user_name" placeholder="Name">
+              <input type="text" name="user_name" class="form-control text_filed" id="user_name" placeholder="Name">
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group">
-              <select class="form-select" name="user_role" id="user_role">
+              <select class="form-select text_filed" name="user_role" id="user_role">
                 <option selected disabled>User Role</option>
                 <option value="1">Admin</option>
                 <option value="2">Owner</option>
                 <option value="3">Lecturer</option>
-                <option value="3">Student</option>
+                <option value="4">Student</option>
               </select>
               <div class="validate"></div>
             </div>
           </div>
 
-          <div class="mb-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
-          </div>
-          <div><button type="submit">Add</button></div>
+          <div><button type="submit" class="log_btn mt-3">Add</button></div>
         </form>
 
         <div class="section-title">
@@ -155,9 +162,13 @@
                 <td th:text="${user.getName()}"></td>
                 <td th:text="${user.getMobile()}"></td>
                 <td th:text="${user.getEmail()}"></td>
-                <td th:text="${user.getRole_id()}"></td>
+                <td th:if="${user.getRole_id() == 1}" >Administrator</td>
+                <td th:if="${user.getRole_id() == 2}" >Owner</td>
+                <td th:if="${user.getRole_id() == 3}" >Lecturer</td>
+                <td th:if="${user.getRole_id() == 4}" >Student</td>
                 <td th:text="${user.getRoom_no()}"></td>
-                <td class="text-center"><a href="#" class="text-danger"><i class="bi bi-trash"></i></a></td>
+                <td th:if="${user.getIs_deleted() == 0}" class="text-center"><a th:href="@{/deleteUser/{id}(id=${user.getId()})}" class="text-danger"><i class="bi bi-trash"></i></a></td>
+                <td th:if="${user.getIs_deleted() == 1}" class="text-center"><a href="#" class="text-warning"><i class="bi bi-arrow-return-left"></i></a></td>
               </tr>
             </table>
           </div>

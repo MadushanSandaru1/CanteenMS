@@ -1864,3 +1864,9 @@ th {
   border: 1px solid  #cda45e;
   border-radius: 10px;
 }
+
+.text_filed{
+  color: white;
+  background-color: black;
+  border: 1px solid #cda45e;
+}
