@@ -43,7 +43,7 @@ Inventory (
 	is_deleted int
 )
 
-Order (
+Orders (
 	id INTEGER,
 	item_id int,
 	quantity int,
@@ -51,4 +51,19 @@ Order (
 	ordered_at LocalDateTime,
 	user_id int,
 	is_canceled int
+)
+
+Orders_log (
+	id INTEGER,
+	item_id int,
+	user_id int,
+	quantity int,
+	total_price float,
+	ordered_at LocalDateTime,
+	delivered_at LocalDateTime
+)
+
+Transactions (
+	transaction_date LocalDateTime,
+	total_amount float
 )
