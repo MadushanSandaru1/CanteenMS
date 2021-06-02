@@ -23,14 +23,26 @@ public class LoginController {
     @PostMapping("/loginAccount")
     public String login(@RequestParam("username") String user_name, @RequestParam("pwd") String password, HttpServletRequest request, HttpSession session)
     {
+        int i,flag=0;
         User user = loginServices.isUserValid(user_name);
-        Login login = loginServices.isPasswordValid(password);
+        ArrayList<Login> login = loginServices.isPasswordValid(password);
 
         //session
         List<String> users = (List<String>) request.getSession().getAttribute("USER_SESSION");
 
         if(Objects.nonNull(user) && Objects.nonNull(login)){
-            if (user.getId() == login.getId()) {
+            for (i=0;i<login.size();i++)
+            {
+                if (user.getId() == login.get(i).getId()) {
+                    flag =1;
+                    break;
+                }
+                else
+                    flag=0;
+            }
+
+            if(flag ==1)
+            {
                 if (users == null)
                 {
                     users = new ArrayList<>();

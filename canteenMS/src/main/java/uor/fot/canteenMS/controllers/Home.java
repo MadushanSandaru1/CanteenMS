@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import uor.fot.canteenMS.entities.User;
 import uor.fot.canteenMS.services.UserService;
 
+import javax.activation.DataHandler;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class Home {
 
     @Autowired
     UserService userService;
+    @Autowired
+    private DashboardController dashboardController;
 
     @RequestMapping(path = "/",method = RequestMethod.GET)
     public  String getIndex(Model model,HttpSession session)
@@ -72,13 +75,21 @@ public class Home {
     @RequestMapping(path = "/dashboard")
     public  String getDashboardPage(Model model,HttpSession session)
     {
+        String active_users;
         List<String> users = (List<String>) session.getAttribute("USER_SESSION");
+        Integer active_user_count = dashboardController.getActiveUsers();
+
+        if(active_user_count < 10)
+            active_users="0"+active_user_count;
+        else
+            active_users = String.valueOf(active_user_count);
 
         if (users == null)
         {
             //users = new ArrayList<>();
             return "redirect:/login";
         }
+        model.addAttribute("active_users",active_users);
         model.addAttribute("user_details",users);
         return "tmp_cms/views/dashboard";
     }

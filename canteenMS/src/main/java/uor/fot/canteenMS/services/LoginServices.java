@@ -7,6 +7,8 @@ import uor.fot.canteenMS.entities.User;
 import uor.fot.canteenMS.repositories.LoginRepository;
 import uor.fot.canteenMS.repositories.UserRepository;
 
+import java.util.ArrayList;
+
 @Service
 public class LoginServices {
 
@@ -19,8 +21,9 @@ public class LoginServices {
         return userRepository.findByRegId(user_name);
     }
 
-    public Login isPasswordValid(String password)
+    public ArrayList<Login> isPasswordValid(String password)
     {
+
         return loginRepository.findByPwd(password);
     }
 }

@@ -99,37 +99,37 @@
         <div class="section-title">
           <p>Profile</p>
         </div>
-
-        <form action="" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+        <div th:if="${param.profile_error}" class="alert alert-danger text-center">
+            Sorry unable to update profile please try again!.
+        </div>
+        <div th:if="${param.profile_done}" class="alert alert-success text-center">
+            User profile updated successfully!.
+        </div>
+        <form th:action="@{/saveUpdateProfile}" method="post">
           <div class="row">
             <div class="col-lg-4 col-md-6 form-group">
-              <input type="text" name="id_no" class="form-control" id="id_no" placeholder="ID Number" th:value="${user_details.get(1)}" readonly>
+              <input type="text" name="id_no" class="form-control text_filed" id="id_no" placeholder="ID Number" th:value="${user_details.get(1)}"  style="background-color: black;color: white" readonly>
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group">
-              <input type="text" name="name" class="form-control" id="name" placeholder="Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" th:value="${user_details.get(2)}">
+              <input type="text" name="name" class="form-control text_filed" id="name" placeholder="Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" th:value="${user_details.get(2)}">
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group">
-              <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone Number" data-rule="minlen:4" data-msg="Please enter at least 4 chars" th:value="${user_details.get(3)}">
+              <input type="text" class="form-control text_filed" name="phone" id="phone" placeholder="Phone Number" data-rule="minlen:4" data-msg="Please enter at least 4 chars" th:value="${user_details.get(3)}">
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group mt-lg-3">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Email Address" data-rule="email" data-msg="Please enter a valid email" th:value="${user_details.get(4)}">
+              <input type="email" class="form-control text_filed" name="email" id="email" placeholder="Email Address" data-rule="email" data-msg="Please enter a valid email" th:value="${user_details.get(4)}">
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group mt-lg-3">
-              <input type="text" class="form-control" name="room_id" id="room_no" placeholder="Room Number" data-rule="minlen:3" data-msg="Please enter a correct room ID" th:value="${user_details.get(6)}">
+              <input type="text" class="form-control text_filed" name="room_id" id="room_no" placeholder="Room Number" data-rule="minlen:3" data-msg="Please enter a correct room ID" th:value="${user_details.get(6)}">
               <div class="validate"></div>
             </div>
           </div>
 
-          <div class="mb-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
-          </div>
-          <div class="text-center"><button type="submit">Update</button></div>
+          <div class="text-center"><button type="submit" class="log_btn mt-2">Update</button></div>
         </form>
 
         <form action="" method="post" role="form" class="php-email-form mt-5" data-aos="fade-up" data-aos-delay="100">

@@ -41,4 +41,17 @@ public class UserService {
         userRepository.userAccountDeleted(id);
         return true;
     }
+
+    public boolean restoreUser(Integer id) {
+        User user;
+        if(userRepository.findById(id).isPresent())
+        {
+            user = userRepository.findById(id).get();
+            user.setIs_deleted(0);
+            userRepository.save(user);
+            return true;
+        }
+        else
+            return false;
+    }
 }

@@ -6,8 +6,10 @@ import org.springframework.stereotype.Repository;
 import uor.fot.canteenMS.entities.Login;
 import uor.fot.canteenMS.entities.User;
 
+import java.util.ArrayList;
+
 @Repository
 public interface LoginRepository extends CrudRepository<Login,Integer> {
     @Query(value = "SELECT l FROM Login l WHERE l.password=?1 ")
-    Login findByPwd(String pwd);
+    ArrayList<Login> findByPwd(String pwd);
 }

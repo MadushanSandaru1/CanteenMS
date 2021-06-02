@@ -33,4 +33,14 @@ public class UserController {
         else
             return  "redirect:/user?delete_error";
     }
+
+    @RequestMapping("/restoreUser/{id}")
+    public String restoreUser(@PathVariable("id") Integer id)
+    {
+        boolean res = userService.restoreUser(id);
+        if(res)
+            return  "redirect:/user?restore_done";
+        else
+            return  "redirect:/user?restore_error";
+    }
 }

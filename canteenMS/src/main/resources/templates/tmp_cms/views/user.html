@@ -109,6 +109,12 @@
         <div th:if="${param.delete_done}" class="alert alert-success text-center">
           User account deleted successfully!.
         </div>
+        <div th:if="${param.restore_error}" class="alert alert-danger text-center">
+          Sorry unable to restore account please try again!.
+        </div>
+        <div th:if="${param.restore_done}" class="alert alert-success text-center">
+          User account restored successfully!.
+        </div>
         <form th:action="@{/saveUser}" method="post"  >
           <div class="row">
             <div class="col-lg-4 col-md-6 form-group">
@@ -141,7 +147,7 @@
 
         <div class="row justify-content-end">
           <div class="col-lg-4 col-md-6 table-search">
-            <input type="text" name="search" class="form-control" id="search" placeholder="Search...">
+            <input type="text" name="search" class="form-control" id="txt_searchall" placeholder="Search...">
           </div>
         </div>
 
@@ -158,7 +164,7 @@
                 <th>Action</th>
               </tr>
               <tr th:each="user:${user_list}">
-                <td th:text="${user.getId()}"></td>
+                <td th:text="${user.getRegistered_no()}"></td>
                 <td th:text="${user.getName()}"></td>
                 <td th:text="${user.getMobile()}"></td>
                 <td th:text="${user.getEmail()}"></td>
@@ -168,7 +174,7 @@
                 <td th:if="${user.getRole_id() == 4}" >Student</td>
                 <td th:text="${user.getRoom_no()}"></td>
                 <td th:if="${user.getIs_deleted() == 0}" class="text-center"><a th:href="@{/deleteUser/{id}(id=${user.getId()})}" class="text-danger"><i class="bi bi-trash"></i></a></td>
-                <td th:if="${user.getIs_deleted() == 1}" class="text-center"><a href="#" class="text-warning"><i class="bi bi-arrow-return-left"></i></a></td>
+                <td th:if="${user.getIs_deleted() == 1}" class="text-center"><a  th:href="@{/restoreUser/{id}(id=${user.getId()})}" class="text-warning"><i class="bi bi-arrow-return-left"></i></a></td>
               </tr>
             </table>
           </div>
@@ -256,6 +262,33 @@
   <!-- Template Main JS File -->
   <script src="../assets/js/main.js"></script>
   <script src="../assets/js/custom.js"></script>
+  <script>
+    $(document).ready(function(){
+      // Search all columns
+      $('#txt_searchall').keyup(function(){
+        // Search Text
+        var search = $(this).val();
+        // Hide all table tbody rows
+        $('table tbody tr').hide();
+        // Count total search result
+        var len = $('table tbody tr:not(.notfound) td:contains("'+search+'")').length;
+        if(len > 0){
+          // Searching text in columns and show match row
+          $('table tbody tr:not(.notfound) td:contains("'+search+'")').each(function(){
+            $(this).closest('tr').show();
+          });
+        }else{
+          $('.notfound').show();
+        }
+      });
+    });
+    // Case-insensitive searching (Note - remove the below script for Case sensitive search )
+    $.expr[":"].contains = $.expr.createPseudo(function(arg) {
+      return function( elem ) {
+        return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+      };
+    });
+  </script>
 
 </body>
 
