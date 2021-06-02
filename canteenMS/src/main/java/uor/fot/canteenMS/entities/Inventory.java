@@ -13,7 +13,7 @@ public class Inventory {
     private Integer id;
     private Integer product_id;
     private Integer quantity;
-    private Float unit_place;
+    private Float unit_price;
     private LocalDateTime inserted_at;
     private LocalDateTime expiry_at;
     private Integer is_deleted;
@@ -42,12 +42,12 @@ public class Inventory {
         this.quantity = quantity;
     }
 
-    public Float getUnit_place() {
-        return unit_place;
+    public Float getUnit_price() {
+        return unit_price;
     }
 
-    public void setUnit_place(Float unit_place) {
-        this.unit_place = unit_place;
+    public void setUnit_plrice(Float unit_price) {
+        this.unit_price = unit_price;
     }
 
     public LocalDateTime getInserted_at() {
