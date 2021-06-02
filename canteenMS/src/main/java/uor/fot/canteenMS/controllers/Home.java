@@ -88,6 +88,7 @@ public class Home {
     {
         List<String> users = (List<String>) session.getAttribute("USER_SESSION");
         List<User> userList = userService.getUsers();
+        //Integer user_last_id = userService.getUserLastID()+1;
         if (users == null)
         {
             //users = new ArrayList<>();
@@ -95,6 +96,7 @@ public class Home {
         }
         model.addAttribute("user_details",users);
         model.addAttribute("user_list",userList);
+        //model.addAttribute("user_last_id",user_last_id);
         return "tmp_cms/views/user";
     }
 
