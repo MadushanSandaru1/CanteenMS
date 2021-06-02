@@ -19,15 +19,36 @@ Role (
 	role_name String
 )
 
+Category (
+	id INTEGER,
+	type String,
+	is_deleted int
+)
 
+Product (
+	id INTEGER,
+	name String,
+	category_id int
+	is_hide int,
+	is_deleted int
+)
 
+Inventory (
+	id INTEGER,
+	product_id int,
+	quantity int,
+	unit_price float,
+	inserted_at LocalDateTime,
+	expiry_at LocalDateTime,
+	is_deleted int
+)
 
-
-CATEGORY(category_id, category_name, is_deleted)
-PRODUCT(product_id, product_name, product_type, is_deleted)
-INVENTORY(inventory_id, product_id, product_price, product_qty, product_exp, is_deleted)
-FOOD(food_id, food_name, food_desc, food_price, inserted_at, is_deleted)
-
-OREDR(order_id, customer_id, item_type, item_id, item_qty, ordered_at)
-
-TRANSACTION(transcation_id, cutomer_id, billed_at, amount, is_deleted)
+Order (
+	id INTEGER,
+	item_id int,
+	quantity int,
+	unit_price float,
+	ordered_at LocalDateTime,
+	user_id int,
+	is_canceled int
+)
