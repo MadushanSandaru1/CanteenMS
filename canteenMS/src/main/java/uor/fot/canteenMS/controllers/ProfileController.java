@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uor.fot.canteenMS.services.LoginServices;
 import uor.fot.canteenMS.services.ProfileService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,8 @@ import java.util.List;
 public class ProfileController {
     @Autowired
     private ProfileService profileService;
+    @Autowired
+    private LoginServices loginServices;
 
     @PostMapping("/saveUpdateProfile")
     public String updateProfile(HttpSession session, HttpServletRequest request,@RequestParam("id_no") String reg, @RequestParam("name") String name, @RequestParam("phone") String phone, @RequestParam("email") String email, @RequestParam("room_id") String room_id)
@@ -37,5 +40,19 @@ public class ProfileController {
         }
         else
             return "redirect:/profile?profile_error";
+    }
+
+    @PostMapping("/updatePassword")
+    public String updatePassword(@RequestParam("user_t_id") String id,@RequestParam("old_pwd") String old_password,@RequestParam("new_pwd") String new_password,@RequestParam("confirm_pwd") String con_password)
+    {
+        if(new_password.equalsIgnoreCase(con_password)) {
+            boolean res = loginServices.updateUserPassword(id, old_password, new_password);
+            if(res)
+                return "redirect:/profile?pwd_updated";
+            else
+                return "redirect:/profile?pwd_not_updated";
+        }
+        else
+            return "redirect:/profile?pwd_not_match";
     }
 }

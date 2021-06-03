@@ -26,4 +26,11 @@ public class LoginServices {
 
         return loginRepository.findByPwd(password);
     }
+
+    public boolean updateUserPassword(String id, String old_password, String new_password) {
+        loginRepository.userPasswordUpdate(id,old_password,new_password);
+
+            return true;
+
+    }
 }

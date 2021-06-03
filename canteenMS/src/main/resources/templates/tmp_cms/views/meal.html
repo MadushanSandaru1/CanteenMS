@@ -61,10 +61,10 @@
         <ul>
 
           <!-- for owner -->
-          <li><a class="nav-link scrollto" th:href="@{/dashboard}">Dashboard</a></li>
-          <li><a class="nav-link scrollto" th:href="@{/product}">Product</a></li>
-          <li><a class="nav-link scrollto" th:href="@{/inventory}">Inventory</a></li>
-          <li><a class="nav-link scrollto active" th:href="@{/meal}">Meals</a></li>
+          <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('1')}" class="nav-link scrollto" th:href="@{/dashboard}">Dashboard</a></li>
+          <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/product}">Product</a></li>
+          <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/inventory}">Inventory</a></li>
+          <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto active" th:href="@{/meal}">Meals</a></li>
           <li><a class="nav-link scrollto" th:href="@{/profile}">Profile</a></li>
           <li><a class="nav-link scrollto" th:href="@{/logout}">Log out</a></li>
         </ul>

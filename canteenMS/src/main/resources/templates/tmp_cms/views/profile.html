@@ -62,12 +62,12 @@
 
         <!-- for customer -->
         <li><a class="nav-link scrollto" th:href="@{/}">Home</a></li>
-        <li><a class="nav-link scrollto" th:href="@{/menu}">Menu</a></li>
-        <li><a class="nav-link scrollto" th:href="@{/orders}">My Order</a></li>
+        <li><a th:if="${user_details.get(5).equals('3') || user_details.get(5).equals('4')}"class="nav-link scrollto" th:href="@{/menu}">Menu</a></li>
+        <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('3') || user_details.get(5).equals('4')}"class="nav-link scrollto" th:href="@{/orders}">My Order</a></li>
         <li><a class="nav-link scrollto active" th:href="@{/profile}">Profile</a></li>
 
         <!-- for owner -->
-        <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('1')}"class="nav-link scrollto" href="dashboard.html">Dashboard</a></li>
+        <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('1')}"class="nav-link scrollto" th:href="@{/dashboard}">Dashboard</a></li>
         <li><a class="nav-link scrollto" th:href="@{/logout}">Log out</a></li>
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
@@ -132,30 +132,34 @@
           <div class="text-center"><button type="submit" class="log_btn mt-2">Update</button></div>
         </form>
 
-        <form action="" method="post" role="form" class="php-email-form mt-5" data-aos="fade-up" data-aos-delay="100">
+        <form th:action="@{/updatePassword}" method="post" >
           <hr>
-
+          <div th:if="${param.pwd_not_updated}" class="alert alert-danger text-center">
+            Sorry unable to update profile password please try again!.
+          </div>
+          <div th:if="${param.pwd_not_match}" class="alert alert-danger text-center">
+            Sorry you entered password doesn't match please try again!.
+          </div>
+          <div th:if="${param.pwd_updated}" class="alert alert-success text-center">
+            User profile password updated successfully!.
+          </div>
           <div class="row">
             <div class="col-lg-4 col-md-6 form-group mt-3">
-              <input type="password" name="old_pwd" class="form-control" id="old_pwd" placeholder="Old Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars">
+              <input type="hidden" name="user_t_id" th:value="${user_details.get(1)}">
+              <input type="password" name="old_pwd" class="form-control text_filed" id="old_pwd" placeholder="Old Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars">
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group mt-3">
-              <input type="password" name="new_pwd" class="form-control" id="new_pwd" placeholder="New Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars">
+              <input type="password" name="new_pwd" class="form-control text_filed" id="new_pwd" placeholder="New Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars">
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group mt-3">
-              <input type="password" name="confirm_pwd" class="form-control" id="confirm_pwd" placeholder="Confirm Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars">
+              <input type="password" name="confirm_pwd" class="form-control text_filed" id="confirm_pwd" placeholder="Confirm Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars">
               <div class="validate"></div>
             </div>
           </div>
 
-          <div class="mb-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
-          </div>
-          <div class="text-center"><button type="submit">Update</button></div>
+          <div class="text-center"><button type="submit" class="log_btn mt-2">Update</button></div>
         </form>
 
       </div>
