@@ -6,8 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import uor.fot.canteenMS.entities.Category;
+import uor.fot.canteenMS.entities.Inventory;
+import uor.fot.canteenMS.entities.Product;
 import uor.fot.canteenMS.entities.User;
-import uor.fot.canteenMS.services.UserService;
+import uor.fot.canteenMS.services.*;
 
 import javax.activation.DataHandler;
 import javax.servlet.http.HttpSession;
@@ -17,9 +20,17 @@ import java.util.List;
 public class Home {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
     @Autowired
     private DashboardController dashboardController;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private InventoryService inventoryService;
+    @Autowired
+    private MealsService mealsService;
 
     @RequestMapping(path = "/",method = RequestMethod.GET)
     public  String getIndex(Model model,HttpSession session)
@@ -115,12 +126,16 @@ public class Home {
     public  String getProductPage(HttpSession session,Model model)
     {
         List<String> users = (List<String>) session.getAttribute("USER_SESSION");
+        List<Category> categories = categoryService.getAllCategories();
+        List<Product> products = productService.getAllProducts();
         if (users == null)
         {
             //users = new ArrayList<>();
             return "redirect:/login";
         }
         model.addAttribute("user_details",users);
+        model.addAttribute("categories",categories);
+        model.addAttribute("products",products);
         return "tmp_cms/views/product";
     }
 
@@ -128,12 +143,18 @@ public class Home {
     public  String getInventoryPage(HttpSession session,Model model)
     {
         List<String> users = (List<String>) session.getAttribute("USER_SESSION");
+        List<Product> products = productService.getAllActiveProducts();
+        List<Category> categories = categoryService.getAllCategories();
+        List<Inventory> inventories = inventoryService.getAllInventory();
         if (users == null)
         {
             //users = new ArrayList<>();
             return "redirect:/login";
         }
         model.addAttribute("user_details",users);
+        model.addAttribute("products",products);
+        model.addAttribute("category",categoryService);
+        model.addAttribute("inventories",inventories);
         return "tmp_cms/views/inventory";
     }
 
@@ -141,12 +162,16 @@ public class Home {
     public  String getMealPage(HttpSession session,Model model)
     {
         List<String> users = (List<String>) session.getAttribute("USER_SESSION");
+        List<Inventory> meals = mealsService.getMealsForOwner();
+        List<Product> products = productService.getAllProducts();
         if (users == null)
         {
             //users = new ArrayList<>();
             return "redirect:/login";
         }
         model.addAttribute("user_details",users);
+        model.addAttribute("meals",meals);
+        model.addAttribute("products",products);
         return "tmp_cms/views/meal";
     }
 

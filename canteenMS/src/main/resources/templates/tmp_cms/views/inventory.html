@@ -97,34 +97,36 @@
           <h2>Add Inventory</h2>
         </div>
 
-        <form action="" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+        <form th:action="@{/saveInventory}" method="post">
+          <div th:if="${param.inventory_error}" class="alert alert-danger text-center">
+            Sorry unable to add inventory details please try again!.
+          </div>
+          <div th:if="${param.inventory_done}" class="alert alert-success text-center">
+            Inventory details added successfully!.
+          </div>
           <div class="row">
             <div class="col-lg-4 col-md-6 form-group">
-              <select class="form-select" name="p_name" id="p_name">
+              <select class="form-select text_filed" name="p_name" id="p_name">
                 <option selected disabled>Product Name</option>
-                <option value="1">Admin</option>
-                <option value="2">Owner</option>
-                <option value="3">Lecturer</option>
-                <option value="3">Student</option>
+                <option th:each="product:${products}" th:text="${product.getName()}" th:value="${product.getId()}"></option>
               </select>
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group">
-              <input type="number" name="p_qty" class="form-control" id="p_qty" placeholder="Quantity">
+              <input type="number" name="p_qty" class="form-control text_filed" id="p_qty" placeholder="Quantity">
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group">
-              <input type="date" name="p_exp_date" class="form-control" id="p_exp_date" placeholder="Quantity">
+              <input type="datetime-local" name="p_exp_date" class="form-control text_filed" id="p_exp_date" placeholder="Quantity">
+              <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6 form-group">
+              <input type="text" name="p_unit_price" class="form-control text_filed mt-2" id="p_uni_price" placeholder="Product unit price">
               <div class="validate"></div>
             </div>
           </div>
 
-          <div class="mb-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
-          </div>
-          <div><button type="submit">Add</button></div>
+          <div><button type="submit" class="log_btn mt-3">Add</button></div>
         </form>
 
         <div class="section-title">
@@ -139,26 +141,39 @@
 
         <div class="row">
           <div class="col-12">
+            <div th:if="${param.inventory_delete_error}" class="alert alert-danger text-center">
+              Sorry unable to delete inventory details please try again!.
+            </div>
+            <div th:if="${param.inventory_delete_done}" class="alert alert-success text-center">
+              Inventory details deleted successfully!.
+            </div>
+            <div th:if="${param.inventory_restore_error}" class="alert alert-danger text-center">
+              Sorry unable to restore inventory details please try again!.
+            </div>
+            <div th:if="${param.inventory_restore_done}" class="alert alert-success text-center">
+              Inventory details restored successfully!.
+            </div>
             <table>
               <tr>
                 <th>No</th>
                 <th>Product Name</th>
                 <th>Category</th>
                 <th>Quantity</th>
-                <th>Price</th>
+                <th>Unit Price</th>
                 <th>Inserted Date</th>
                 <th>Expiry Date</th>
                 <th>Action</th>
               </tr>
-              <tr>
-                <td>1</td>
-                <td>Abc</td>
-                <td>Def</td>
-                <td>10</td>
-                <td>100.00</td>
-                <td>2021-09-17</td>
-                <td>2021-09-17</td>
-                <td class="text-center"><a href="#" class="text-danger"><i class="bi bi-trash"></i></a></td>
+              <tr th:each="inventory:${inventories}">
+                <td th:text="${inventory.getId()}"></td>
+                <td th:each="product:${products}" th:if="${inventory.getProduct_id() == product.getId()}" th:text="${product.getName()}"></td>
+                <td th:each="product:${products}" th:if="${inventory.getProduct_id() == product.getId()}" th:text="${category.getCategoryName(product.getId())}"></td>
+                <td th:text="${inventory.getQuantity()}"></td>
+                <td th:text="${inventory.getUnit_price()}"></td>
+                <td th:text="${inventory.getInserted_at()}"></td>
+                <td th:text="${inventory.getExpiry_at()}"></td>
+                <td th:if="${inventory.getIs_deleted() == 0}" class="text-center"><a th:href="@{/deleteInventory/{id}(id=${inventory.getId()})}" class="text-danger"><i class="bi bi-trash"></i></a></td>
+                <td th:if="${inventory.getIs_deleted() == 1}" class="text-center"><a th:href="@{/restoreInventory/{id}(id=${inventory.getId()})}" class="text-warning"><i class="bi bi-arrow-return-left"></i></a></td>
               </tr>
             </table>
           </div>

@@ -96,41 +96,26 @@
           <p class="mb-5">Product</p>
           <h2>Add New Product</h2>
         </div>
-
-        <form action="" method="post" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
+        <div th:if="${param.product_error}" class="alert alert-danger text-center">
+          Sorry unable to add product details please try again!.
+        </div>
+        <div th:if="${param.product_done}" class="alert alert-success text-center">
+          product details added successfully!.
+        </div>
+        <form th:action="@{/saveProduct}" method="post" >
           <div class="row">
             <div class="col-lg-4 col-md-6 form-group">
-              <input type="text" name="p_name" class="form-control" id="p_name" placeholder="Product Name" readonly>
-              <div class="validate"></div>
-            </div>
-            <div class="col-lg-2 col-md-2 form-group">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="category_toggle" onclick="categoryToggle()">
-                <label class="form-check-label" for="category_toggle">
-                  New Category
-                </label>
-              </div>
+              <input type="text" name="p_name" class="form-control text_filed" id="p_name" placeholder="Product Name">
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-4 form-group">
-              <select class="form-select" name="p_category" id="p_category">
+              <select  class="form-select text_filed" name="p_category" id="p_category">
                 <option selected disabled>Product Category</option>
-                <option value="1">Admin</option>
-                <option value="2">Owner</option>
-                <option value="3">Lecturer</option>
-                <option value="3">Student</option>
+                <option th:each="cat:${categories}" th:text="${cat.getType()}" th:value="${cat.getId()}"></option>
               </select>
-              <input type="text" name="p_new_category" class="form-control" id="p_new_category" placeholder="New Product Category">
-              <div class="validate"></div>
             </div>
           </div>
-
-          <div class="mb-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
-          </div>
-          <div><button type="submit">Add</button></div>
+          <div><button type="submit" class="log_btn mt-3">Add</button></div>
         </form>
 
         <div class="section-title">
@@ -145,6 +130,18 @@
 
         <div class="row">
           <div class="col-12">
+            <div th:if="${param.product_delete_error}" class="alert alert-danger text-center">
+              Sorry unable to delete product details please try again!.
+            </div>
+            <div th:if="${param.product_delete_done}" class="alert alert-success text-center">
+              Product deleted  successfully!.
+            </div>
+            <div th:if="${param.product_restore_error}" class="alert alert-danger text-center">
+              Sorry unable to restore product details please try again!.
+            </div>
+            <div th:if="${param.product_restore_done}" class="alert alert-success text-center">
+              Product restored  successfully!.
+            </div>
             <table>
               <tr>
                 <th>No</th>
@@ -153,41 +150,18 @@
                 <th>Hide</th>
                 <th>Action</th>
               </tr>
-              <tr>
-                <td>1</td>
-                <td>Abc</td>
-                <td>Def</td>
-                <td>No</td>
-                <td class="text-center"><a href="#" class="text-danger"><i class="bi bi-trash"></i></a></td>
+              <tr th:each="product:${products}">
+                <td th:text="${product.getId()}"></td>
+                <td th:text="${product.getName()}"></td>
+                <td th:each="cat:${categories}" th:if="${product.getCategory_id() == cat.getId()}" th:text="${cat.getType()}"></td>
+                <td th:if="${product.getIs_hide()==0}">No</td>
+                <td th:if="${product.getIs_hide()==1}">Yes</td>
+                <td th:if="${product.getIs_deleted()==0}" class="text-center"><a th:href="@{/deleteProduct/{id}(id=${product.getId()})}" class="text-danger"><i class="bi bi-trash"></i></a></td>
+                <td th:if="${product.getIs_deleted() == 1}" class="text-center"><a  th:href="@{/restoreProduct/{id}(id=${product.getId()})}" class="text-warning"><i class="bi bi-arrow-return-left"></i></a></td>
               </tr>
             </table>
           </div>
         </div>
-
-<!--        <div class="row">-->
-<!--          <div class="col-12">-->
-<!--            <table>-->
-<!--              <tr>-->
-<!--                <th>No</th>-->
-<!--                <th>Name</th>-->
-<!--                <th>Category</th>-->
-<!--                <th>Exp: Date</th>-->
-<!--                <th>Qty</th>-->
-<!--                <th>Unit Price</th>-->
-<!--                <th>Action</th>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <td>1</td>-->
-<!--                <td>Abc</td>-->
-<!--                <td>Def</td>-->
-<!--                <td>2021-07-26</td>-->
-<!--                <td>30</td>-->
-<!--                <td>700.00</td>-->
-<!--                <td class="text-center">Del</td>-->
-<!--              </tr>-->
-<!--            </table>-->
-<!--          </div>-->
-<!--        </div>-->
 
       </div>
     </section><!-- End Book A Table Section -->
