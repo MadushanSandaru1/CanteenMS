@@ -41,4 +41,9 @@ public class InventoryService {
         }
         return false;
     }
+
+    public List<Inventory> getInventoryForCustomers()
+    {
+        return inventoryRepository.getInventoryForCustomer();
+    }
 }

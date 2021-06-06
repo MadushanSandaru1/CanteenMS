@@ -69,8 +69,8 @@
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-      <a th:href="@{/login}" class="book-a-table-btn scrollto d-none d-lg-flex">Log in</a>
-
+      <a th:href="@{/login}" th:if="${account_id.equalsIgnoreCase('0')}" class="book-a-table-btn scrollto d-none d-lg-flex">Log in</a>
+      <a th:href="@{/logout}" th:if="${!account_id.equalsIgnoreCase('0')}" class="book-a-table-btn scrollto d-none d-lg-flex">Log out</a>
     </div>
   </header><!-- End Header -->
 
@@ -107,26 +107,146 @@
               <li data-filter=".filter-chilled">Chilled</li>
               <li data-filter=".filter-grocery">Grocery</li>
               <li data-filter=".filter-meals">Meals</li>
-              <li data-filter=".filter-homeware">Homeware</li>
               <li data-filter=".filter-household">Household</li>
               <li data-filter=".filter-pharmacy">Pharmacy</li>
             </ul>
           </div>
         </div>
-
+        <div th:if="${param.order_login_error}" class="alert alert-danger text-center">
+            Sorry! first you have to log into your account to order items!.
+        </div>
+        <div th:if="${param.order_error}" class="alert alert-danger text-center">
+          Sorry!  unable to order this item!
+        </div>
+        <div th:if="${param.order_done}" class="alert alert-success text-center">
+          You have ordered item successfully!.
+        </div>
         <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
 
-          <div class="col-lg-6 menu-item filter-chilled">
+          <div class="col-lg-6 menu-item filter-bakery" th:each="inventory:${inventories}" th:if="${category.getCategoryName(inventory.getProduct_id()).equalsIgnoreCase('Bakery')}">
+            <img src="../assets/img/menu/bread-barrel.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProduct_id() == product.getId()}" th:text="${product.getName()}"></a><span th:text="${inventory.getUnit_price()}">Rs. </span>
+            </div>
+            <form th:action="@{/orderBakery}" method="post" >
+              <div class="menu-ingredients form-group">
+                <input type="hidden" name="acc_id" th:value="${account_id}">
+                <input type="hidden" name="inventory_id" th:value="${inventory.getId()}">
+                <input type="hidden" name="unit_price" th:value="${inventory.getUnit_price()}">
+                Quantity: <input type="number" name="qty" min="1" value="1">
+                <button type="submit" class="order-button">Order</button>
+              </div>
+            </form>
+            <div class="menu-ingredients">
+              <small>Bakery</small>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-beverages" th:each="inventory:${inventories}" th:if="${category.getCategoryName(inventory.getProduct_id()).equalsIgnoreCase('Beverages')}">
+            <img src="../assets/img/menu/beverages.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProduct_id() == product.getId()}" th:text="${product.getName()}"></a><span th:text="${inventory.getUnit_price()}">Rs. </span>
+            </div>
+            <form th:action="@{/orderBeverage}" method="post" >
+              <div class="menu-ingredients form-group">
+                <input type="hidden" name="acc_id" th:value="${account_id}">
+                <input type="hidden" name="inventory_id" th:value="${inventory.getId()}">
+                <input type="hidden" name="unit_price" th:value="${inventory.getUnit_price()}">
+                Quantity: <input type="number" name="qty" min="1" value="1">
+                <button type="submit" class="order-button">Order</button>
+              </div>
+            </form>
+            <div class="menu-ingredients">
+              <small>Beverages</small>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-chilled" th:each="inventory:${inventories}" th:if="${category.getCategoryName(inventory.getProduct_id()).equalsIgnoreCase('Chilled')}">
             <img src="../assets/img/menu/lobster-bisque.jpg" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Lobster Bisque Lobster Bisque Lobster Bisque Lobster Bisque Lobster Bisque Lobster Bisque</a><span>$5.95</span>
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProduct_id() == product.getId()}" th:text="${product.getName()}"></a><span th:text="${inventory.getUnit_price()}">Rs.</span>
             </div>
-            <div class="menu-ingredients">
-              Quantity: <input type="number" name="qty" min="1" value="1">
-              <a href="#" class="text-success">Order</a>
-            </div>
+            <form th:action="@{/orderChilled}" method="post" >
+              <div class="menu-ingredients form-group">
+                <input type="hidden" name="acc_id" th:value="${account_id}">
+                <input type="hidden" name="inventory_id" th:value="${inventory.getId()}">
+                <input type="hidden" name="unit_price" th:value="${inventory.getUnit_price()}">
+                Quantity: <input type="number" name="qty" min="1" value="1">
+                <button type="submit" class="order-button">Order</button>
+              </div>
+            </form>
             <div class="menu-ingredients">
               <small>chilled</small>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-grocery" th:each="inventory:${inventories}" th:if="${category.getCategoryName(inventory.getProduct_id()).equalsIgnoreCase('Grocery')}">
+            <img src="../assets/img/menu/grosery.png" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProduct_id() == product.getId()}" th:text="${product.getName()}"></a><span th:text="${inventory.getUnit_price()}">Rs. </span>
+            </div>
+            <form th:action="@{/orderGrocery}" method="post" >
+              <div class="menu-ingredients form-group">
+                <input type="hidden" name="acc_id" th:value="${account_id}">
+                <input type="hidden" name="inventory_id" th:value="${inventory.getId()}">
+                <input type="hidden" name="unit_price" th:value="${inventory.getUnit_price()}">
+                Quantity: <input type="number" name="qty" min="1" value="1">
+                <button type="submit" class="order-button">Order</button>
+              </div>
+            </form>
+            <div class="menu-ingredients">
+              <small>Grocery</small>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-meals" th:each="inventory:${inventories}" th:if="${category.getCategoryName(inventory.getProduct_id()).equalsIgnoreCase('Meals')}">
+            <img src="../assets/img/menu/caesar.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProduct_id() == product.getId()}" th:text="${product.getName()}"></a><span th:text="${inventory.getUnit_price()}">Rs. </span>
+            </div>
+            <form th:action="@{/orderMeals}" method="post" >
+              <div class="menu-ingredients form-group">
+                <input type="hidden" name="acc_id" th:value="${account_id}">
+                <input type="hidden" name="inventory_id" th:value="${inventory.getId()}">
+                <input type="hidden" name="unit_price" th:value="${inventory.getUnit_price()}">
+                Quantity: <input type="number" name="qty" min="1" value="1">
+                <button type="submit" class="order-button">Order</button>
+              </div>
+            </form>
+            <div class="menu-ingredients">
+              <small>Meals</small>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-household" th:each="inventory:${inventories}" th:if="${category.getCategoryName(inventory.getProduct_id()).equalsIgnoreCase('Household')}">
+            <img src="../assets/img/menu/tuscan-grilled.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProduct_id() == product.getId()}" th:text="${product.getName()}"></a><span th:text="${inventory.getUnit_price()}">Rs. </span>
+            </div>
+            <form th:action="@{/orderHouesehold}" method="post" >
+              <div class="menu-ingredients form-group">
+                <input type="hidden" name="acc_id" th:value="${account_id}">
+                <input type="hidden" name="inventory_id" th:value="${inventory.getId()}">
+                <input type="hidden" name="unit_price" th:value="${inventory.getUnit_price()}">
+                Quantity: <input type="number" name="qty" min="1" value="1">
+                <button type="submit" class="order-button">Order</button>
+              </div>
+            </form>
+            <div class="menu-ingredients">
+              <small>Household</small>
+            </div>
+          </div>
+          <div class="col-lg-6 menu-item filter-pharmacy" th:each="inventory:${inventories}" th:if="${category.getCategoryName(inventory.getProduct_id()).equalsIgnoreCase('Pharmacy')}">
+            <img src="../assets/img/menu/pharmicy.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProduct_id() == product.getId()}" th:text="${product.getName()}"></a><span th:text="${inventory.getUnit_price()}">Rs. </span>
+            </div>
+            <form th:action="@{/orderPharmacy}" method="post" >
+                <div class="menu-ingredients form-group">
+                  <input type="hidden" name="acc_id" th:value="${account_id}">
+                  <input type="hidden" name="inventory_id" th:value="${inventory.getId()}">
+                  <input type="hidden" name="unit_price" th:value="${inventory.getUnit_price()}">
+                  Quantity: <input type="number" name="qty" min="1" value="1">
+                  <button type="submit" class="order-button">Order</button>
+                </div>
+            </form>
+            <div class="menu-ingredients">
+              <small>Pharmacy</small>
             </div>
           </div>
 

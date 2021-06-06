@@ -1870,3 +1870,10 @@ th {
   background-color: black;
   border: 1px solid #cda45e;
 }
+
+.order-button{
+  color: white;
+  background-color: #198754;
+  border: 1px solid #198754;
+  float: right;
+}

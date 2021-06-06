@@ -6,10 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import uor.fot.canteenMS.entities.Category;
-import uor.fot.canteenMS.entities.Inventory;
-import uor.fot.canteenMS.entities.Product;
-import uor.fot.canteenMS.entities.User;
+import uor.fot.canteenMS.entities.*;
 import uor.fot.canteenMS.services.*;
 
 import javax.activation.DataHandler;
@@ -49,11 +46,25 @@ public class Home {
     public String getMenuPage(HttpSession session,Model model)
     {
         List<String> users = (List<String>) session.getAttribute("USER_SESSION");
+        List<Inventory> inventories = inventoryService.getInventoryForCustomers();
+        List<Product> products = productService.getAllProducts();
+
         if (users == null)
         {
+            model.addAttribute("products",products);
+            model.addAttribute("category",categoryService);
+            model.addAttribute("inventories",inventories);
             model.addAttribute("account","");
+            model.addAttribute("account_id","0");
             return "tmp_cms/views/menu";
         }
+        model.addAttribute("products",products);
+        model.addAttribute("category",categoryService);
+        model.addAttribute("account",users.get(2));
+        model.addAttribute("account_id",users.get(0));
+        model.addAttribute("user_details",users);
+        model.addAttribute("inventories",inventories);
+
         return "tmp_cms/views/menu";
     }
 
