@@ -29,4 +29,12 @@ public interface ProductRepository extends CrudRepository<Product,Integer> {
     @Transactional
     @Procedure(procedureName = "product_delete")
     void productDelete(Integer id);
+
+    //get product name query
+    @Query(value = " select p.name from product p,inventory i WHERE i.product_id=p.id and i.id=?1",nativeQuery = true)
+    String getProductName(Integer id);
+
+    //get number of active products
+    @Query(value = " select count(id) from active_products ",nativeQuery = true)
+    int getActiveProducts();
 }

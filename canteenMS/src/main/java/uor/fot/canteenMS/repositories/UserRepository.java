@@ -42,4 +42,8 @@ public interface UserRepository extends CrudRepository<User,Integer> {
     @Procedure(procedureName = "profile_update")
     void userProfileUpdate(String reg,String name,String phone,String email,String room);
 
+    //get user id
+    @Query(value = "SELECT id FROM user WHERE registered_no=?1 AND is_deleted=0",nativeQuery = true)
+    Integer getUserID(String id);
+
 }

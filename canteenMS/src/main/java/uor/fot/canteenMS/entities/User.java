@@ -3,14 +3,7 @@ package uor.fot.canteenMS.entities;
 import javax.persistence.*;
 
 @Entity
-//@NamedStoredProcedureQueries(
-//        {@NamedStoredProcedureQuery(name = "user_creation_procedure",procedureName = "user_account_create",
-//                parameters = {@StoredProcedureParameter(mode = ParameterMode.IN,name = "user_id",type = Integer.class),
-//                              @StoredProcedureParameter(mode = ParameterMode.IN,name = "user_registered_no",type = String.class),
-//                              @StoredProcedureParameter(mode = ParameterMode.IN,name = "user_name",type = String.class),
-//                              @StoredProcedureParameter(mode = ParameterMode.IN,name = "user_role_id",type = Integer.class)
-//                })}
-//        )
+
 public class User {
 
     @Id

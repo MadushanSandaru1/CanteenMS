@@ -31,4 +31,5 @@ public interface InventoryRepository extends CrudRepository<Inventory, Integer>{
     @Query(value = "SELECT  *FROM inventory_for_customers ",nativeQuery = true)
     List<Inventory> getInventoryForCustomer();
 
+
 }

@@ -60,8 +60,8 @@
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="nav-link scrollto" th:href="@{/}">Home</a></li>
-          <li><a class="nav-link scrollto" th:href="@{/menu}">Menu</a></li>
-          <li><a class="nav-link scrollto active" th:href="@{/orders}">My Order</a></li>
+          <li><a th:if="${user_details.get(5).equals('3') || user_details.get(5).equals('4')}"class="nav-link scrollto" th:href="@{/menu}" >Menu</a></li>
+          <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('3') || user_details.get(5).equals('4')}" class="nav-link scrollto active" th:href="@{/orders}">My Order</a></li>
           <li><a class="nav-link scrollto" th:href="@{/profile}">Profile</a></li>
           <li><a class="nav-link scrollto" th:href="@{/logout}">Log out</a></li>
         </ul>
@@ -88,7 +88,7 @@
     </section>
 
     <!-- ======= Menu Section ======= -->
-    <section id="menu" class="menu mb-md-5">
+    <section th:if="${user_details.get(5).equalsIgnoreCase('3') || user_details.get(5).equalsIgnoreCase('4')}" id="menu" class="menu mb-md-5">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
@@ -104,28 +104,238 @@
               <li data-filter=".filter-chilled">Chilled</li>
               <li data-filter=".filter-grocery">Grocery</li>
               <li data-filter=".filter-meals">Meals</li>
-              <li data-filter=".filter-homeware">Homeware</li>
               <li data-filter=".filter-household">Household</li>
               <li data-filter=".filter-pharmacy">Pharmacy</li>
             </ul>
           </div>
         </div>
-
+        <div th:if="${param.order_cansel_error}" class="alert alert-danger text-center">
+          Sorry!  unable to cancel order this item!
+        </div>
+        <div th:if="${param.order_cansel_done}" class="alert alert-success text-center">
+          You have order canceled successfully!.
+        </div>
         <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
 
           <!-- one item -->
-          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-chilled">
-            <img src="../assets/img/menu/lobster-bisque.jpg" class="menu-img" alt="">
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-bakery" th:each="order:${orders_customer}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Bakery')}">
+            <img src="../assets/img/menu/bread-barrel.jpg" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Lobster Bisque</a><span>$5.95</span>
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
             </div>
             <div class="menu-ingredients">
-              <span>Qty: 5</span><a href="#" class="text-danger">Remove</a>
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
             </div>
             <div class="menu-ingredients">
-              <small>2021-01-15 15:00</small>
+              <small th:text="${order.getOrdered_at()}"></small>
             </div>
           </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-beverages" th:each="order:${orders_customer}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Beverages')}">
+            <img src="../assets/img/menu/beverages.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
+            </div>
+            <div class="menu-ingredients">
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
+            </div>
+            <div class="menu-ingredients">
+              <small th:text="${order.getOrdered_at()}"></small>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-chilled" th:each="order:${orders_customer}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Chilled')}">
+            <img src="../assets/img/menu/lobster-bisque.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
+            </div>
+            <div class="menu-ingredients">
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
+            </div>
+            <div class="menu-ingredients">
+              <small th:text="${order.getOrdered_at()}"></small>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-grocery" th:each="order:${orders_customer}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Grocery')}">
+            <img src="../assets/img/menu/grosery.png" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
+            </div>
+            <div class="menu-ingredients">
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
+            </div>
+            <div class="menu-ingredients">
+              <small th:text="${order.getOrdered_at()}"></small>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-meals" th:each="order:${orders_customer}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Meals')}">
+            <img src="../assets/img/menu/caesar.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
+            </div>
+            <div class="menu-ingredients">
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
+            </div>
+            <div class="menu-ingredients">
+              <small th:text="${order.getOrdered_at()}"></small>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-household" th:each="order:${orders_customer}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Household')}">
+            <img src="../assets/img/menu/tuscan-grilled.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
+            </div>
+            <div class="menu-ingredients">
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
+            </div>
+            <div class="menu-ingredients">
+              <small th:text="${order.getOrdered_at()}"></small>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-pharmacy" th:each="order:${orders_customer}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Pharmacy')}">
+            <img src="../assets/img/menu/pharmicy.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
+            </div>
+            <div class="menu-ingredients">
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
+            </div>
+            <div class="menu-ingredients">
+              <small th:text="${order.getOrdered_at()}"></small>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Menu Section -->
+
+    <!-- ======= Menu Section ======= -->
+    <section th:if="${user_details.get(5).equalsIgnoreCase('2')}" id="menu" class="menu mb-md-5">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <p>Orders</p>
+        </div>
+
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-12 d-flex justify-content-center">
+            <ul id="menu-flters">
+              <li data-filter="*" class="filter-active">All</li>
+              <li data-filter=".filter-bakery">Bakery</li>
+              <li data-filter=".filter-beverages">Beverages</li>
+              <li data-filter=".filter-chilled">Chilled</li>
+              <li data-filter=".filter-grocery">Grocery</li>
+              <li data-filter=".filter-meals">Meals</li>
+              <li data-filter=".filter-household">Household</li>
+              <li data-filter=".filter-pharmacy">Pharmacy</li>
+            </ul>
+          </div>
+        </div>
+        <div th:if="${param.order_cansel_error}" class="alert alert-danger text-center">
+          Sorry!  unable to cancel order this item!
+        </div>
+        <div th:if="${param.order_cansel_done}" class="alert alert-success text-center">
+          You have order canceled successfully!.
+        </div>
+        <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+
+          <!-- one item -->
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-bakery" th:each="order:${orders_owner}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Bakery')}">
+            <img src="../assets/img/menu/bread-barrel.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
+            </div>
+            <div class="menu-ingredients">
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
+            </div>
+            <div class="menu-ingredients">
+              <small th:text="${order.getOrdered_at()}"></small>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-beverages" th:each="order:${orders_owner}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Beverages')}">
+            <img src="../assets/img/menu/beverages.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
+            </div>
+            <div class="menu-ingredients">
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
+            </div>
+            <div class="menu-ingredients">
+              <small th:text="${order.getOrdered_at()}"></small>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-chilled" th:each="order:${orders_owner}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Chilled')}">
+            <img src="../assets/img/menu/lobster-bisque.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
+            </div>
+            <div class="menu-ingredients">
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
+            </div>
+            <div class="menu-ingredients">
+              <small th:text="${order.getOrdered_at()}"></small>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-grocery" th:each="order:${orders_owner}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Grocery')}">
+            <img src="../assets/img/menu/grosery.png" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
+            </div>
+            <div class="menu-ingredients">
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
+            </div>
+            <div class="menu-ingredients">
+              <small th:text="${order.getOrdered_at()}"></small>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-meals" th:each="order:${orders_owner}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Meals')}">
+            <img src="../assets/img/menu/caesar.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
+            </div>
+            <div class="menu-ingredients">
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
+            </div>
+            <div class="menu-ingredients">
+              <small th:text="${order.getOrdered_at()}"></small>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-household" th:each="order:${orders_owner}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Household')}">
+            <img src="../assets/img/menu/tuscan-grilled.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
+            </div>
+            <div class="menu-ingredients">
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
+            </div>
+            <div class="menu-ingredients">
+              <small th:text="${order.getOrdered_at()}"></small>
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-6 col-lg-4 menu-item filter-pharmacy" th:each="order:${orders_owner}" th:if="${category.getCategoryName(inventory.getProductID(order.getItem_id())).equalsIgnoreCase('Pharmacy')}">
+            <img src="../assets/img/menu/pharmicy.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#" th:each="product:${products}" th:if="${inventory.getProductID(order.getItem_id()) == product.getId()}" th:text="${product.getName()}"></a><span th:text="${order.getUnit_price()}"></span>
+            </div>
+            <div class="menu-ingredients">
+              <span>Qty: <i th:text="${order.getQuantity()}"></i></span><a th:href="@{/canselOrders/{id}(id=${order.getId()})}" class="text-danger">Remove</a>
+            </div>
+            <div class="menu-ingredients">
+              <small th:text="${order.getOrdered_at()}"></small>
+            </div>
+          </div>
+
 
         </div>
 

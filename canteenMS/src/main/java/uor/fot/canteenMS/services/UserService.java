@@ -54,4 +54,13 @@ public class UserService {
         else
             return false;
     }
+
+    public String getUserReg(Integer user_id) {
+        User user = userRepository.findById(user_id).get();
+        return user.getRegistered_no();
+    }
+
+    public Integer getUserId(String id) {
+        return userRepository.getUserID(id);
+    }
 }

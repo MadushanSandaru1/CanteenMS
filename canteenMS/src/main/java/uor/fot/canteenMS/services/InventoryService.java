@@ -46,4 +46,11 @@ public class InventoryService {
     {
         return inventoryRepository.getInventoryForCustomer();
     }
+
+    public Integer getProductID(Integer id)
+    {
+        Inventory inventory = inventoryRepository.findById(id).get();
+        return inventory.getProduct_id();
+    }
+
 }

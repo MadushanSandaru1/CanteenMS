@@ -2,6 +2,7 @@ package uor.fot.canteenMS.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uor.fot.canteenMS.entities.Inventory;
 import uor.fot.canteenMS.entities.Product;
 import uor.fot.canteenMS.repositories.ProductRepository;
 
@@ -12,6 +13,8 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private InventoryService inventoryService;
 
     public boolean addProduct(String p_name, Integer p_category) {
         productRepository.productCreate(p_name,p_category);
@@ -49,5 +52,15 @@ public class ProductService {
     public Product getProduct(Integer id)
     {
         return  productRepository.findById(id).get();
+    }
+
+    public String getItemName(Integer id)
+    {
+        return  productRepository.getProductName(id);
+    }
+
+    public int getActiveProducts()
+    {
+        return productRepository.getActiveProducts();
     }
 }

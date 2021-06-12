@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 @Repository
 public interface LoginRepository extends CrudRepository<Login,Integer> {
+    //get login details based on password
     @Query(value = "SELECT l FROM Login l WHERE l.password=?1 ")
     ArrayList<Login> findByPwd(String pwd);
 

@@ -2,6 +2,7 @@ package uor.fot.canteenMS.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 public class Orders_log {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Integer item_id;
     private Integer user_id;
