@@ -58,12 +58,12 @@ public class LoginController {
 
                 //set newly created session values to session array
                 request.getSession().setAttribute("USER_SESSION",users);
-                if(Integer.parseInt(users.get(5)) == 1)
+                if(Integer.parseInt(users.get(5)) == 1 || Integer.parseInt(users.get(5)) == 2)
                     return "redirect:/dashboard";
-                else if(Integer.parseInt(users.get(5)) == 2)
-                    return "redirect:/dashboard";
+                else if(Integer.parseInt(users.get(5)) == 3 || Integer.parseInt(users.get(5)) == 4)
+                    return "redirect:/menu";
                 else
-                    return "redirect:/profile";
+                    return "redirect:/";
             }
             else
                 return "redirect:/login?login_error";

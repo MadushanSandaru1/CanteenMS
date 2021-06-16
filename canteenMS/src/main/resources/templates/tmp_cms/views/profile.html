@@ -37,12 +37,12 @@
   <div class="container d-flex justify-content-center justify-content-md-between">
 
     <div class="contact-info d-flex align-items-center">
-      <i class="bi bi-phone d-flex align-items-center"><span th:text="${user_details.get(3)}"></span></i>
+      <i class="bi bi-phone d-flex align-items-center"><span>+94 12 345 6789</span></i>
     </div>
 
     <div class="languages d-none d-md-flex align-items-center">
       <ul>
-        <li>Hi,</li>
+        <li>Hi </li>
         <li><a th:href="@{/profile}"><p th:text="${user_details.get(2)}"></p></a></li>
       </ul>
     </div>
@@ -53,26 +53,30 @@
 <header id="header" class="fixed-top d-flex align-items-cente">
   <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
-    <h1 class="logo me-auto me-lg-0"><a href="../index.html">FOT Canteen</a></h1>
+    <h1 class="logo me-auto me-lg-0"><a th:href="@{/dashboard}">FOT Canteen</a></h1>
     <!-- Uncomment below if you prefer to use an image logo -->
     <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
     <nav id="navbar" class="navbar order-last order-lg-0">
       <ul>
+        <li><a th:if="${user_details.get(5).equals('1') || user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/dashboard}">Dashboard</a></li>
+        <li><a th:if="${user_details.get(5).equals('1')}" class="nav-link scrollto" th:href="@{/user}">User Account</a></li>
 
-        <!-- for customer -->
-        <li><a class="nav-link scrollto" th:href="@{/}">Home</a></li>
-        <li><a th:if="${user_details.get(5).equals('3') || user_details.get(5).equals('4')}"class="nav-link scrollto" th:href="@{/menu}">Menu</a></li>
-        <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('3') || user_details.get(5).equals('4')}"class="nav-link scrollto" th:href="@{/orders}">My Order</a></li>
+        <li><a th:if="${user_details.get(5).equals('3') || user_details.get(5).equals('4')}" class="nav-link scrollto" th:href="@{/}">Home</a></li>
+        <li><a th:if="${user_details.get(5).equals('3') || user_details.get(5).equals('4')}" class="nav-link scrollto" th:href="@{/menu}">Menu</a></li>
+
+        <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/product}">Product</a></li>
+        <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/inventory}">Inventory</a></li>
+        <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/meal}">Meals</a></li>
+
+        <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('3') || user_details.get(5).equals('4')}" class="nav-link scrollto" th:href="@{/orders}">My Order</a></li>
+        <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/payBills}">Pay Bills</a></li>
+
         <li><a class="nav-link scrollto active" th:href="@{/profile}">Profile</a></li>
-
-        <!-- for owner -->
-        <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('1')}"class="nav-link scrollto" th:href="@{/dashboard}">Dashboard</a></li>
-        <li><a class="nav-link scrollto" th:href="@{/logout}">Log out</a></li>
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav><!-- .navbar -->
-<!--    <a th:href="@{/logout}" class="book-a-table-btn scrollto d-none d-lg-flex">Log out</a>-->
+    <a th:href="@{/logout}" class="book-a-table-btn d-none d-lg-flex">Log out</a>
 
   </div>
 </header><!-- End Header -->
@@ -84,7 +88,6 @@
       <div class="d-flex justify-content-between align-items-center">
         <h2></h2>
         <ol>
-          <li><a th:href="@{/}">Home</a></li>
           <li>Profile</li>
         </ol>
       </div>
@@ -99,20 +102,22 @@
         <div class="section-title">
           <p>Profile</p>
         </div>
-        <div th:if="${param.profile_error}" class="alert alert-danger text-center">
+
+        <div th:if="${param.profile_error}" class="alert text-danger text-center">
             Sorry unable to update profile please try again!.
         </div>
-        <div th:if="${param.profile_done}" class="alert alert-success text-center">
+        <div th:if="${param.profile_done}" class="alert text-success text-center">
             User profile updated successfully!.
         </div>
+
         <form th:action="@{/saveUpdateProfile}" method="post">
           <div class="row">
             <div class="col-lg-4 col-md-6 form-group">
-              <input type="text" name="id_no" class="form-control text_filed" id="id_no" placeholder="ID Number" th:value="${user_details.get(1)}"  style="background-color: black;color: white" readonly>
+              <input type="text" name="id_no" class="form-control text_filed" id="id_no" placeholder="ID Number" th:value="${user_details.get(1)}"  style="background-color: black;color: white" readonly required>
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group">
-              <input type="text" name="name" class="form-control text_filed" id="name" placeholder="Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" th:value="${user_details.get(2)}">
+              <input type="text" name="name" class="form-control text_filed" id="name" placeholder="Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" th:value="${user_details.get(2)}" required>
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group">
@@ -132,29 +137,32 @@
           <div class="text-center"><button type="submit" class="log_btn mt-2">Update</button></div>
         </form>
 
+        <hr>
+
+        <div th:if="${param.pwd_not_updated}" class="alert text-danger text-center">
+          Sorry unable to update profile password please try again!.
+        </div>
+        <div th:if="${param.pwd_not_match}" class="alert text-danger text-center">
+          Sorry you entered password doesn't match please try again!.
+        </div>
+        <div th:if="${param.pwd_updated}" class="alert text-success text-center">
+          User profile password updated successfully!.
+        </div>
+
         <form th:action="@{/updatePassword}" method="post" >
-          <hr>
-          <div th:if="${param.pwd_not_updated}" class="alert alert-danger text-center">
-            Sorry unable to update profile password please try again!.
-          </div>
-          <div th:if="${param.pwd_not_match}" class="alert alert-danger text-center">
-            Sorry you entered password doesn't match please try again!.
-          </div>
-          <div th:if="${param.pwd_updated}" class="alert alert-success text-center">
-            User profile password updated successfully!.
-          </div>
+
           <div class="row">
             <div class="col-lg-4 col-md-6 form-group mt-3">
               <input type="hidden" name="user_t_id" th:value="${user_details.get(1)}">
-              <input type="password" name="old_pwd" class="form-control text_filed" id="old_pwd" placeholder="Old Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars">
+              <input type="password" name="old_pwd" class="form-control text_filed" id="old_pwd" placeholder="Old Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars" required>
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group mt-3">
-              <input type="password" name="new_pwd" class="form-control text_filed" id="new_pwd" placeholder="New Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars">
+              <input type="password" name="new_pwd" class="form-control text_filed" id="new_pwd" placeholder="New Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars" required>
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group mt-3">
-              <input type="password" name="confirm_pwd" class="form-control text_filed" id="confirm_pwd" placeholder="Confirm Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars">
+              <input type="password" name="confirm_pwd" class="form-control text_filed" id="confirm_pwd" placeholder="Confirm Password" data-rule="minlen:8" data-msg="Please enter at least 8 chars" required>
               <div class="validate"></div>
             </div>
           </div>
@@ -195,13 +203,7 @@
       <div class="copyright">
         &copy; Copyright <strong><span>FOT Canteen</span></strong>. All Rights Reserved
       </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/restaurantly-restaurant-template/ -->
-        Designed by <a href="">Team Semicolon</a>
-      </div>
+      <div class="credits">Designed by <a href="#">Team Semicolon</a></div>
     </div>
   </footer><!-- End Footer -->
 

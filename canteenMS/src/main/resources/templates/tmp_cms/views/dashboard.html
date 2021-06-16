@@ -37,13 +37,13 @@
     <div class="container d-flex justify-content-center justify-content-md-between">
 
       <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-phone d-flex align-items-center"><span th:text="${user_details.get(3)}"></span></i>
+        <i class="bi bi-phone d-flex align-items-center"><span>+94 12 345 6789</span></i>
       </div>
 
       <div class="languages d-none d-md-flex align-items-center">
         <ul>
-          <li>Hi,</li>
-          <li><a href="profile.html"><p th:text="${user_details.get(2)}"></p></a></li>
+          <li>Hi </li>
+          <li><a th:href="@{/profile}"><p th:text="${user_details.get(2)}"></p></a></li>
         </ul>
       </div>
     </div>
@@ -53,26 +53,30 @@
   <header id="header" class="fixed-top d-flex align-items-cente">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
-      <h1 class="logo me-auto me-lg-0"><a href="dashboard.html">FOT Canteen</a></h1>
+      <h1 class="logo me-auto me-lg-0"><a th:href="@{/dashboard}">FOT Canteen</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
+          <li><a th:if="${user_details.get(5).equals('1') || user_details.get(5).equals('2')}" class="nav-link scrollto active" th:href="@{/dashboard}">Dashboard</a></li>
+          <li><a th:if="${user_details.get(5).equals('1')}" class="nav-link scrollto" th:href="@{/user}">User Account</a></li>
 
-          <!-- for owner -->
-          <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('1')}" class="nav-link scrollto active" th:href="@{/dahboard}">Dashboard</a></li>
-          <li><a th:if="${user_details.get(5).equals('1')}"class="nav-link scrollto" th:href="@{/user}">User Account</a></li>
-          <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/payBills}">Pay Bills</a></li>
+          <li><a th:if="${user_details.get(5).equals('3') || user_details.get(5).equals('4')}" class="nav-link scrollto" th:href="@{/}">Home</a></li>
+          <li><a th:if="${user_details.get(5).equals('3') || user_details.get(5).equals('4')}" class="nav-link scrollto" th:href="@{/menu}">Menu</a></li>
+
           <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/product}">Product</a></li>
-          <li><a th:if="${user_details.get(5).equals('2')}"class="nav-link scrollto" th:href="@{/inventory}">Inventory</a></li>
-          <li><a th:if="${user_details.get(5).equals('2')}"class="nav-link scrollto" th:href="@{/meal}">Meals</a></li>
+          <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/inventory}">Inventory</a></li>
+          <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/meal}">Meals</a></li>
+
+          <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('3') || user_details.get(5).equals('4')}" class="nav-link scrollto" th:href="@{/orders}">My Order</a></li>
+          <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/payBills}">Pay Bills</a></li>
+
           <li><a class="nav-link scrollto" th:href="@{/profile}">Profile</a></li>
-          <li><a class="nav-link scrollto" th:href="@{/logout}">Log out</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-<!--      <a th:href="@{/logout}" class="glightbox book-a-table-btn scrollto d-none d-lg-flex">Log out</a>-->
+      <a th:href="@{/logout}" class="book-a-table-btn d-none d-lg-flex">Log out</a>
 
     </div>
   </header><!-- End Header -->
@@ -101,21 +105,22 @@
 
         <div class="row mb-md-5">
           <div class="col-md-12">
-            <div th:if="${param.paybills_error}" class="alert alert-danger text-center">
+            <div th:if="${param.paybills_error}" class="alert text-danger text-center">
               Sorry!  unable to pay bill amount!
             </div>
-            <div th:if="${param.paybills_done}" class="alert alert-success text-center">
+            <div th:if="${param.paybills_done}" class="alert text-success text-center">
               Order bill paid  successfully!.
             </div>
           </div>
-          <div class="col-lg-4">
+
+          <div th:if="${user_details.get(5).equals('1')}" class="col-lg-4">
             <div class="box" data-aos="zoom-in" data-aos-delay="100">
               <span th:text="${active_users}"></span>
               <h4>Number of Active Users</h4>
             </div>
           </div>
 
-          <div class="col-lg-4 mt-4 mt-lg-0">
+          <div th:if="${user_details.get(5).equals('2')}" class="col-lg-4 mt-4 mt-lg-0">
             <div class="box" data-aos="zoom-in" data-aos-delay="200">
               <span th:text="${active_products}"></span>
               <h4>Number of active Products</h4>
@@ -169,7 +174,7 @@
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/restaurantly-restaurant-template/ -->
-        Designed by <a href="">Team Semicolon</a>
+        Designed by <a href="#">Team Semicolon</a>
       </div>
     </div>
   </footer><!-- End Footer -->

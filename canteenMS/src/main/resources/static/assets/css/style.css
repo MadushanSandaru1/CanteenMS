@@ -1877,3 +1877,7 @@ th {
   border: 1px solid #198754;
   float: right;
 }
+
+.alert{
+  border: 1px solid #cda45e;
+}

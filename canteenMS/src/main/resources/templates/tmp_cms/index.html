@@ -43,13 +43,13 @@
     <div class="container d-flex justify-content-center justify-content-md-between">
 
       <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-phone d-flex align-items-center"><span>+94 77 163 7551</span></i>
+        <i class="bi bi-phone d-flex align-items-center"><span>+94 12 345 6789</span></i>
       </div>
 
       <div class="languages d-none d-md-flex align-items-center">
         <ul>
-          <li>Hi,</li>
-          <li><a href="views/profile.html"><p th:text="${account}"></p></a></li>
+          <li>Hi </li>
+          <li><a th:href="@{/profile}"><p th:text="${account}"></p></a></li>
         </ul>
       </div>
     </div>
@@ -59,7 +59,7 @@
   <header id="header" class="fixed-top d-flex align-items-cente">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
-      <h1 class="logo me-auto me-lg-0"><a href="index.html">FOT Canteen</a></h1>
+      <h1 class="logo me-auto me-lg-0"><a th:href="@{/}">FOT Canteen</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -71,9 +71,6 @@
           <li><a class="nav-link scrollto" th:href="@{/menu}">Menu</a></li>
           <li><a class="nav-link scrollto" th:href="@{/orders}">My Order</a></li>
           <li><a class="nav-link scrollto" th:href="@{/profile}">Profile</a></li>
-
-          <!-- for owner -->
-          <li><a class="nav-link scrollto" th:href="@{/dashboard}">Dashboard</a></li>
 
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -116,7 +113,7 @@
         <div class="row justify-content-center">
 
           <div class="col-md-6">
-            <div th:if="${param.login_error}" class="alert alert-danger text-center">
+            <div th:if="${param.login_error}" class="alert text-danger text-center">
               Invalid user information please try again!.
             </div>
             <form th:action="@{/loginAccount}" method="post">
@@ -171,13 +168,7 @@
       <div class="copyright">
         &copy; Copyright <strong><span>FOT Canteen</span></strong>. All Rights Reserved
       </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/restaurantly-restaurant-template/ -->
-        Designed by <a href="">Team Semicolon</a>
-      </div>
+      <div class="credits">Designed by <a href="#">Team Semicolon</a></div>
     </div>
   </footer><!-- End Footer -->
 

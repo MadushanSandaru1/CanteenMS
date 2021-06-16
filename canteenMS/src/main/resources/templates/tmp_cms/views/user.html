@@ -37,12 +37,12 @@
     <div class="container d-flex justify-content-center justify-content-md-between">
 
       <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-phone d-flex align-items-center"><span th:text="${user_details.get(3)}"></span></i>
+        <i class="bi bi-phone d-flex align-items-center"><span>+94 12 345 6789</span></i>
       </div>
 
       <div class="languages d-none d-md-flex align-items-center">
         <ul>
-          <li>Hi,</li>
+          <li>Hi </li>
           <li><a th:href="@{/profile}"><p th:text="${user_details.get(2)}"></p></a></li>
         </ul>
       </div>
@@ -53,25 +53,30 @@
   <header id="header" class="fixed-top d-flex align-items-cente">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
-      <h1 class="logo me-auto me-lg-0"><a href="dashboard.html">FOT Canteen</a></h1>
+      <h1 class="logo me-auto me-lg-0"><a th:href="@{/dashboard}">FOT Canteen</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-
-          <!-- for owner -->
-          <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('1')}" class="nav-link scrollto" th:href="@{/dashboard}">Dashboard</a></li>
+          <li><a th:if="${user_details.get(5).equals('1') || user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/dashboard}">Dashboard</a></li>
           <li><a th:if="${user_details.get(5).equals('1')}" class="nav-link scrollto active" th:href="@{/user}">User Account</a></li>
+
+          <li><a th:if="${user_details.get(5).equals('3') || user_details.get(5).equals('4')}" class="nav-link scrollto" th:href="@{/}">Home</a></li>
+          <li><a th:if="${user_details.get(5).equals('3') || user_details.get(5).equals('4')}" class="nav-link scrollto" th:href="@{/menu}">Menu</a></li>
+
           <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/product}">Product</a></li>
           <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/inventory}">Inventory</a></li>
           <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/meal}">Meals</a></li>
+
+          <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('3') || user_details.get(5).equals('4')}" class="nav-link scrollto" th:href="@{/orders}">My Order</a></li>
+          <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/payBills}">Pay Bills</a></li>
+
           <li><a class="nav-link scrollto" th:href="@{/profile}">Profile</a></li>
-          <li><a class="nav-link scrollto" th:href="@{/logout}">Log out</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-<!--      <a th:href="@{/logout}" class="glightbox book-a-table-btn scrollto d-none d-lg-flex">Log out</a>-->
+      <a th:href="@{/logout}" class="book-a-table-btn scrollto d-none d-lg-flex">Log out</a>
 
     </div>
   </header><!-- End Header -->
@@ -94,27 +99,20 @@
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <p class="mb-5">User Account</p>
+          <p>User Account</p>
+        </div>
+
+        <div class="section-title">
           <h2>Add New User Account</h2>
         </div>
-        <div th:if="${param.error}" class="alert alert-danger text-center">
-          Sorry unable to create account please try again!.
-        </div>
-        <div th:if="${param.done}" class="alert alert-success text-center">
+
+        <div th:if="${param.done}" class="text-success alert text-center">
           User account created successfully!.
         </div>
-        <div th:if="${param.delete_error}" class="alert alert-danger text-center">
-          Sorry unable to delete account please try again!.
+        <div th:if="${param.error}" class="text-danger alert text-center">
+          Sorry unable to create account please try again!.
         </div>
-        <div th:if="${param.delete_done}" class="alert alert-success text-center">
-          User account deleted successfully!.
-        </div>
-        <div th:if="${param.restore_error}" class="alert alert-danger text-center">
-          Sorry unable to restore account please try again!.
-        </div>
-        <div th:if="${param.restore_done}" class="alert alert-success text-center">
-          User account restored successfully!.
-        </div>
+
         <form th:action="@{/saveUser}" method="post"  >
           <div class="row">
             <div class="col-lg-4 col-md-6 form-group">
@@ -151,6 +149,19 @@
           </div>
         </div>
 
+        <div th:if="${param.delete_done}" class="text-success alert text-center">
+          User account deleted successfully!.
+        </div>
+        <div th:if="${param.restore_done}" class="text-success alert text-center">
+          User account restored successfully!.
+        </div>
+        <div th:if="${param.delete_error}" class="text-danger alert text-center">
+          Sorry unable to delete account please try again!.
+        </div>
+        <div th:if="${param.restore_error}" class="text-danger alert text-center">
+          Sorry unable to restore account please try again!.
+        </div>
+
         <div class="row">
           <div class="col-12">
             <table>
@@ -173,8 +184,8 @@
                 <td th:if="${user.getRole_id() == 3}" >Lecturer</td>
                 <td th:if="${user.getRole_id() == 4}" >Student</td>
                 <td th:text="${user.getRoom_no()}"></td>
-                <td th:if="${user.getIs_deleted() == 0}" class="text-center"><a th:href="@{/deleteUser/{id}(id=${user.getId()})}" class="text-danger"><i class="bi bi-trash"></i></a></td>
-                <td th:if="${user.getIs_deleted() == 1}" class="text-center"><a  th:href="@{/restoreUser/{id}(id=${user.getId()})}" class="text-warning"><i class="bi bi-arrow-return-left"></i></a></td>
+                <td th:if="${user.getIs_deleted() == 0}" th:unless="${user.getRole_id() == 1}"class="text-center"><a th:href="@{/deleteUser/{id}(id=${user.getId()})}" class="text-danger"><i class="bi bi-trash"></i></a></td>
+                <td th:if="${user.getIs_deleted() == 1}" th:unless="${user.getRole_id() == 1}" class="text-center"><a  th:href="@{/restoreUser/{id}(id=${user.getId()})}" class="text-warning"><i class="bi bi-arrow-return-left"></i></a></td>
               </tr>
             </table>
           </div>
@@ -238,13 +249,7 @@
       <div class="copyright">
         &copy; Copyright <strong><span>FOT Canteen</span></strong>. All Rights Reserved
       </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/restaurantly-restaurant-template/ -->
-        Designed by <a href="">Team Semicolon</a>
-      </div>
+      <div class="credits">Designed by <a href="#">Team Semicolon</a></div>
     </div>
   </footer><!-- End Footer -->
 
