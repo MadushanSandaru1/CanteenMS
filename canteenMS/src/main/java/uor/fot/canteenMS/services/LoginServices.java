@@ -8,6 +8,7 @@ import uor.fot.canteenMS.repositories.LoginRepository;
 import uor.fot.canteenMS.repositories.UserRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class LoginServices {
@@ -31,6 +32,10 @@ public class LoginServices {
         loginRepository.userPasswordUpdate(id,old_password,new_password);
 
             return true;
+    }
 
+    public List<Login> getLogins()
+    {
+        return (List<Login>) loginRepository.findAll();
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import uor.fot.canteenMS.entities.Login;
 import uor.fot.canteenMS.services.LoginServices;
 import uor.fot.canteenMS.services.ProfileService;
 
@@ -43,16 +44,35 @@ public class ProfileController {
     }
 
     @PostMapping("/updatePassword")
-    public String updatePassword(@RequestParam("user_t_id") String id,@RequestParam("old_pwd") String old_password,@RequestParam("new_pwd") String new_password,@RequestParam("confirm_pwd") String con_password)
+    public String updatePassword(@RequestParam("user_id") Integer u_id, @RequestParam("user_t_id") String id,@RequestParam("old_pwd") String old_password,@RequestParam("new_pwd") String new_password,@RequestParam("confirm_pwd") String con_password)
     {
-        if(new_password.equalsIgnoreCase(con_password)) {
-            boolean res = loginServices.updateUserPassword(id, old_password, new_password);
-            if(res)
-                return "redirect:/profile?pwd_updated";
+        List<Login> logins = loginServices.getLogins();
+        int flag=0;
+
+        for(Login login : logins)
+        {
+            if(login.getPassword().equalsIgnoreCase(old_password) && login.getId()==u_id)
+            {
+                flag =1;
+                break;
+            }
             else
-                return "redirect:/profile?pwd_not_updated";
+                flag =0;
+        }
+
+        if(flag ==1)
+        {
+            if(new_password.equalsIgnoreCase(con_password)) {
+                boolean res = loginServices.updateUserPassword(id, old_password, new_password);
+                if(res)
+                    return "redirect:/profile?pwd_updated";
+                else
+                    return "redirect:/profile?pwd_not_updated";
+            }
+            else
+                return "redirect:/profile?pwd_not_match";
         }
         else
-            return "redirect:/profile?pwd_not_match";
+            return "redirect:/profile?pwd_old_not_exists";
     }
 }
