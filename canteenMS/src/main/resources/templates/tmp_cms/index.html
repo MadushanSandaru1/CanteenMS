@@ -48,7 +48,7 @@
 
       <div class="languages d-none d-md-flex align-items-center">
         <ul>
-          <li>Hi </li>
+          <li th:unless="${account.equalsIgnoreCase('')}">Hi </li>
           <li><a th:href="@{/profile}"><p th:text="${account}"></p></a></li>
         </ul>
       </div>
@@ -69,14 +69,14 @@
           <!-- for customers -->
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" th:href="@{/menu}">Menu</a></li>
-          <li><a class="nav-link scrollto" th:href="@{/orders}">My Order</a></li>
-          <li><a class="nav-link scrollto" th:href="@{/profile}">Profile</a></li>
+          <li><a th:unless="${account.equalsIgnoreCase('')}" class="nav-link scrollto" th:href="@{/orders}">My Order</a></li>
+          <li><a th:unless="${account.equalsIgnoreCase('')}" class="nav-link scrollto" th:href="@{/profile}">Profile</a></li>
 
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
       <a th:if="${account.equalsIgnoreCase('')}" href="index.html#login" class="book-a-table-btn scrollto d-none d-lg-flex">Log in</a>
-      <a th:if="${!account.equalsIgnoreCase('')}" th:href="@{/logout}" class="book-a-table-btn scrollto d-none d-lg-flex">Log out</a>
+      <a th:unless="${account.equalsIgnoreCase('')}" th:href="@{/logout}" class="book-a-table-btn scrollto d-none d-lg-flex">Log out</a>
 
     </div>
   </header><!-- End Header -->
@@ -90,7 +90,7 @@
           <h2>Deliciousness jumping into the mouth.</h2>
 
           <div class="btns">
-            <a href="index.html#login" class="btn-menu scrollto">Log in</a>
+            <a th:if="${account.equalsIgnoreCase('')}" href="index.html#login" class="btn-menu scrollto">Log in</a>
           </div>
         </div>
 
@@ -101,7 +101,7 @@
   <main id="main">
 
     <!-- ======= Login Section ======= -->
-    <section id="login" class="contact">
+    <section th:if="${account.equalsIgnoreCase('')}" id="login" class="contact">
 
       <div class="container" data-aos="fade-up">
 
