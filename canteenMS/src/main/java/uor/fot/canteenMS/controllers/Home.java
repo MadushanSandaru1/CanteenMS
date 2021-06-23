@@ -10,6 +10,7 @@ import uor.fot.canteenMS.services.*;
 
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -54,6 +55,7 @@ public class Home {
 
         if (users == null)
         {
+            model.addAttribute("user_details",this.getEmptyUsers());
             model.addAttribute("products",products);
             model.addAttribute("category",categoryService);
             model.addAttribute("inventories",inventories);
@@ -61,14 +63,17 @@ public class Home {
             model.addAttribute("account_id","0");
             return "tmp_cms/views/menu";
         }
-        model.addAttribute("products",products);
-        model.addAttribute("category",categoryService);
-        model.addAttribute("account",users.get(2));
-        model.addAttribute("account_id",users.get(0));
-        model.addAttribute("user_details",users);
-        model.addAttribute("inventories",inventories);
+        else
+        {
+            model.addAttribute("products",products);
+            model.addAttribute("category",categoryService);
+            model.addAttribute("account",users.get(2));
+            model.addAttribute("account_id",users.get(0));
+            model.addAttribute("user_details",users);
+            model.addAttribute("inventories",inventories);
 
-        return "tmp_cms/views/menu";
+            return "tmp_cms/views/menu";
+        }
     }
 
     @RequestMapping(path = "/orders")
@@ -243,10 +248,16 @@ public class Home {
         return "tmp_cms/views/login";
     }
 
-//    @RequestMapping(path = "/logout")
-//    public  String getLogoutPage(HttpSession session)
-//    {
-//
-//        return "tmp_cms/views/logout";
-//    }
+    public List<String> getEmptyUsers()
+    {
+        List<String> list = new ArrayList<>();
+        list.add("");
+        list.add("");
+        list.add("");
+        list.add("");
+        list.add("");
+        list.add("0");
+
+        return list;
+    }
 }

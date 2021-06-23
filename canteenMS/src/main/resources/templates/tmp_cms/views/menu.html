@@ -59,24 +59,25 @@
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a th:if="${user_details.get(5).equals('1') || user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/dashboard}">Dashboard</a></li>
-          <li><a th:if="${user_details.get(5).equals('1')}" class="nav-link scrollto" th:href="@{/user}">User Account</a></li>
+          <li><a th:if="${user_details.get(5).equals('1') || user_details.get(5).equals('2') }" class="nav-link scrollto" th:href="@{/dashboard}">Dashboard</a></li>
+          <li><a th:if="${user_details.get(5).equals('1')  }" class="nav-link scrollto" th:href="@{/user}">User Account</a></li>
 
-          <li><a th:if="${user_details.get(5).equals('3') || user_details.get(5).equals('4')}" class="nav-link scrollto" th:href="@{/}">Home</a></li>
-          <li><a th:if="${user_details.get(5).equals('3') || user_details.get(5).equals('4')}" class="nav-link scrollto active" th:href="@{/menu}">Menu</a></li>
+          <li><a th:if="${user_details.get(5).equals('3') || user_details.get(5).equals('4') || user_details.get(5).equals('0')}" class="nav-link scrollto" th:href="@{/}">Home</a></li>
+          <li><a th:if="${user_details.get(5).equals('3') || user_details.get(5).equals('4') || user_details.get(5).equals('0')}" class="nav-link scrollto active" th:href="@{/menu}">Menu</a></li>
 
-          <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/product}">Product</a></li>
-          <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/inventory}">Inventory</a></li>
-          <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/meal}">Meals</a></li>
+          <li><a th:if="${user_details.get(5).equals('2') }" class="nav-link scrollto" th:href="@{/product}">Product</a></li>
+          <li><a th:if="${user_details.get(5).equals('2') }" class="nav-link scrollto" th:href="@{/inventory}">Inventory</a></li>
+          <li><a th:if="${user_details.get(5).equals('2') }" class="nav-link scrollto" th:href="@{/meal}">Meals</a></li>
 
-          <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('3') || user_details.get(5).equals('4')}" class="nav-link scrollto" th:href="@{/orders}">My Order</a></li>
-          <li><a th:if="${user_details.get(5).equals('2')}" class="nav-link scrollto" th:href="@{/payBills}">Pay Bills</a></li>
+          <li><a th:if="${user_details.get(5).equals('2') || user_details.get(5).equals('3') || user_details.get(5).equals('4') || user_details.get(5).equals('0')}" class="nav-link scrollto" th:href="@{/orders}">My Order</a></li>
+          <li><a th:if="${user_details.get(5).equals('2') }" class="nav-link scrollto" th:href="@{/payBills}">Pay Bills</a></li>
 
           <li><a class="nav-link scrollto" th:href="@{/profile}">Profile</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-      <a th:href="@{/logout}" class="book-a-table-btn d-none d-lg-flex">Log out</a>
+      <a th:if="${!user_details.get(5).equals('0') }" th:href="@{/logout}" class="book-a-table-btn d-none d-lg-flex">Log out</a>
+      <a th:if="${user_details.get(5).equals('0') }" th:href="@{/login}" class="book-a-table-btn d-none d-lg-flex">Log in</a>
 
     </div>
   </header><!-- End Header -->
