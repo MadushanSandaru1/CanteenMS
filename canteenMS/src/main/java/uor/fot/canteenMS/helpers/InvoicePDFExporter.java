@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import uor.fot.canteenMS.entities.Orders;
 import uor.fot.canteenMS.entities.Product;
 import uor.fot.canteenMS.services.ProductService;
+import uor.fot.canteenMS.services.SendEmailService;
+import uor.fot.canteenMS.services.UserService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
@@ -25,8 +27,18 @@ public class InvoicePDFExporter {
     private String date;
     private float total =0;
     private String reg;
+
     @Autowired
     private ProductService product;
+    @Autowired
+    private SendEmailService sendEmailService;
+    @Autowired
+    private UserService userService;
+
+    //mail veriables
+    String to = "";
+    String title = "";
+    String body = "";
 
 
     public void  fillValues(ArrayList<Orders> orders, String date,String reg)
@@ -143,6 +155,21 @@ public class InvoicePDFExporter {
         document.add(p_para);
 
         document.close();
+
+        //Email Section
+        to = userService.getEmail(reg);
+        title = "Regarding your Invoice";
+        body = "Dear "+reg+",\n\nIn bellow you can see your order details and there prices.\n\n";
+
+        for (Orders ordered : orders) {
+            body += product.getItemName(ordered.getItem_id())+" - "+ordered.getUnit_price()+"LKR/-\n";
+        }
+
+        body +="\nGrand total : "+total+"LKR/-\n";
+        body +="\nThank you for your attention.\n";
+        body +="\nFOT Canteen\nFaculty of Technology\nUniversity of Ruhuna\nGam Udawa\nKamburupitiya\nMatara";
+        sendEmailService.sendEmial(to,body,title);
+
         return "redirect:/dashboard?paybills_done";
     }
 }

@@ -63,4 +63,9 @@ public class UserService {
     public Integer getUserId(String id) {
         return userRepository.getUserID(id);
     }
+
+    public String getEmail(String reg)
+    {
+        return userRepository.getEmail(reg);
+    }
 }

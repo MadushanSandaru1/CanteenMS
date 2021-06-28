@@ -46,4 +46,8 @@ public interface UserRepository extends CrudRepository<User,Integer> {
     @Query(value = "SELECT id FROM user WHERE registered_no=?1 AND is_deleted=0",nativeQuery = true)
     Integer getUserID(String id);
 
+    //get email address
+    @Query(value = "SELECT email FROM user WHERE registered_no=?1 AND is_deleted=0",nativeQuery = true)
+    String getEmail(String reg);
+
 }
