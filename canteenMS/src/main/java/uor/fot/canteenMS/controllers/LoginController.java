@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import uor.fot.canteenMS.entities.Login;
 import uor.fot.canteenMS.entities.User;
+import uor.fot.canteenMS.helpers.Encription;
 import uor.fot.canteenMS.services.LoginServices;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,13 +20,13 @@ public class LoginController {
     @Autowired
     LoginServices loginServices;
 
-
     @PostMapping("/loginAccount")
     public String login(@RequestParam("username") String user_name, @RequestParam("pwd") String password, HttpServletRequest request, HttpSession session)
     {
         int i,flag=0;
+        String pwd = Encription.sha1(password);
         User user = loginServices.isUserValid(user_name);
-        ArrayList<Login> login = loginServices.isPasswordValid(password);
+        ArrayList<Login> login = loginServices.isPasswordValid(pwd);
 
         //session
         List<String> users = (List<String>) request.getSession().getAttribute("USER_SESSION");
