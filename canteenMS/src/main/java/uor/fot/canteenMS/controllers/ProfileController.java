@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import uor.fot.canteenMS.entities.Login;
+import uor.fot.canteenMS.helpers.Encription;
 import uor.fot.canteenMS.services.LoginServices;
 import uor.fot.canteenMS.services.ProfileService;
 
@@ -48,10 +49,11 @@ public class ProfileController {
     {
         List<Login> logins = loginServices.getLogins();
         int flag=0;
+        String pwd = Encription.sha1(old_password);
 
         for(Login login : logins)
         {
-            if(login.getPassword().equalsIgnoreCase(old_password) && login.getId()==u_id)
+            if(login.getPassword().equalsIgnoreCase(pwd) && login.getId()==u_id)
             {
                 flag =1;
                 break;
