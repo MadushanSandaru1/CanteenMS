@@ -16,8 +16,8 @@ public class UserController {
     @PostMapping("/saveUser")
     public String addUserAccount(@RequestParam("user_id") String reg_no,@RequestParam("user_name") String name,@RequestParam("user_role") Integer user_role)
     {
-        Integer id = userService.getUserLastID()+1;
-        boolean res = userService.addUserAccount(id,reg_no,name,user_role);
+        //Integer id = userService.getUserLastID()+1;
+        boolean res = userService.addUserAccount(reg_no,name,user_role);
         if(res)
             return  "redirect:/user?done";
         else

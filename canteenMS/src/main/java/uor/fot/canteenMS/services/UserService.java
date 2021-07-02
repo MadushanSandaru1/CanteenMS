@@ -31,9 +31,9 @@ public class UserService {
         return res;
     }
 
-    public boolean addUserAccount(Integer id, String reg, String u_name, Integer user_role) {
+    public boolean addUserAccount(String reg, String u_name, Integer user_role) {
 
-        userRepository.userAccountCreate(id,reg,u_name,user_role);
+        userRepository.userAccountCreate(reg,u_name,user_role);
         return true;
     }
 

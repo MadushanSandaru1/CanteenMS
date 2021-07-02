@@ -25,8 +25,8 @@ public interface UserRepository extends CrudRepository<User,Integer> {
     int getActiveUsers();
 
     //insert user procedure
-    @Query(value = "{CALL user_account_create(?1,?2,?3,?4)}",nativeQuery = true)
-    int userAccountCreate(Integer id,String user_registered_no, String name, Integer user_role_id);
+    @Query(value = "{CALL user_account_create(?1,?2,?3)}",nativeQuery = true)
+    int userAccountCreate(String user_registered_no, String name, Integer user_role_id);
 
     //delete user procedure
     @Query(value = "{CALL user_account_delete(?1)}",nativeQuery = true)
