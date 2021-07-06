@@ -288,8 +288,7 @@ CREATE TABLE IF NOT EXISTS `login` (
 --
 
 INSERT INTO `login` (`id`, `password`) VALUES
-(1,'7110eda4d09e062aa5e4a390b0a572ac0d2c0220'),
-(2,'7110eda4d09e062aa5e4a390b0a572ac0d2c0220');
+(1,'7110eda4d09e062aa5e4a390b0a572ac0d2c0220');
 
 -- --------------------------------------------------------
 
@@ -444,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `email`, `is_deleted`, `mobile`, `name`, `registered_no`, `role_id`, `room_no`) VALUES
+INSERT INTO `user` (`id`, `registered_no`, `name`, `mobile`, `email`, `role_id`, `room_no`, `is_deleted`) VALUES
 (1,'ADM01','Administrator FOT','0414567346','admin@fot.com',1,'',0);
 
 --
@@ -453,7 +452,7 @@ INSERT INTO `user` (`id`, `email`, `is_deleted`, `mobile`, `name`, `registered_n
 DROP TRIGGER IF EXISTS `TR_after_user_insert`;
 DELIMITER $$
 CREATE TRIGGER `TR_after_user_insert` AFTER INSERT ON `user` FOR EACH ROW BEGIN
-INSERT INTO `login`(`id`, `password`) VALUES (NEW.`id`, 'Student@pwd');
+INSERT INTO `login`(`id`, `password`) VALUES (NEW.`id`, 'User@pwd');
 END
 $$
 DELIMITER ;
