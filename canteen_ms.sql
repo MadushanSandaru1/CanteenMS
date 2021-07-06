@@ -53,17 +53,17 @@ END$$
 
 DROP PROCEDURE IF EXISTS `myorders_for_customers`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `myorders_for_customers` (IN `user_registered_no` VARCHAR(5))  BEGIN
-SELECT o.id, o.item_id, o.`quantity`, o.`quantity` * o.`unit_price` AS `unit_price`, o.`ordered_at`,o.user_id,o.is_canceled 
-FROM `orders` o, `product` p, `user` u, `category` c 
-WHERE o.`item_id` = p.`id` AND o.`user_id` = u.`id` AND p.`category_id` = c.`id` AND o.`is_canceled` = 0 AND u.`registered_no` = user_registered_no 
+SELECT o.`id`, o.`item_id`, o.`quantity`, o.`quantity` * o.`unit_price` AS `unit_price`, o.`ordered_at`, o.`user_id`, o.`is_canceled` 
+FROM `orders` o, `user` u
+WHERE o.`user_id` = u.`id` AND o.`is_canceled` = 0 AND u.`registered_no` = user_registered_no 
 ORDER BY o.`ordered_at` DESC;
 END$$
 
 DROP PROCEDURE IF EXISTS `myorders_for_owner`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `myorders_for_owner` ()  BEGIN
-SELECT o.`id`, o.item_id,o.`quantity`, o.`quantity`*o.`unit_price` AS `unit_price`, o.`ordered_at`,o.user_id,o.is_canceled  
-FROM `orders` o, `product` p, `user` u, `category` c 
-WHERE o.`item_id` = p.`id` AND o.`user_id` = u.`id` AND p.`category_id` = c.`id` AND o.`is_canceled` = 0
+SELECT o.`id`, o.`item_id`,o.`quantity`, o.`quantity`,o.`unit_price` AS `unit_price`, o.`ordered_at`,o.`user_id`, o.`is_canceled`
+FROM `orders` o
+WHERE o.`is_canceled` = 0
 ORDER BY o.`ordered_at` ASC;
 END$$
 
@@ -235,20 +235,6 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `inventory`
---
-
-INSERT INTO `inventory` (`id`, `product_id`, `quantity`, `unit_price`, `inserted_at`, `expiry_at`, `is_deleted`) VALUES
-(1, 1, 1, 75, '2021-06-04 21:45:15', '2021-06-05 21:45:00', 0),
-(2, 2, 1, 65, '2021-06-04 22:16:35', '2021-06-05 22:16:00', 0),
-(3, 5, 10, 20, '2021-06-05 12:15:22', '2021-06-04 12:15:00', 0),
-(4, 6, 2, 30, '2021-06-05 12:16:17', '2021-06-05 12:16:00', 0),
-(5, 9, 5, 18.84, '2021-06-06 14:11:46', '2021-06-09 14:11:00', 0),
-(6, 1, 3, 75, '2021-06-06 15:36:24', '2021-06-07 15:36:00', 0),
-(7, 6, 2, 30, '2021-06-10 13:24:01', '2021-06-30 13:23:00', 0),
-(8, 9, 2, 18.84, '2021-06-10 13:24:35', '2021-06-30 13:24:00', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -302,14 +288,8 @@ CREATE TABLE IF NOT EXISTS `login` (
 --
 
 INSERT INTO `login` (`id`, `password`) VALUES
-(1, '1234'),
-(2, '456'),
-(3, '789'),
-(4, '111'),
-(5, '222'),
-(6, 'Student@pwd'),
-(7, 'Student@pwd'),
-(8, 'Student@pwd');
+(1,'7110eda4d09e062aa5e4a390b0a572ac0d2c0220'),
+(2,'7110eda4d09e062aa5e4a390b0a572ac0d2c0220');
 
 -- --------------------------------------------------------
 
@@ -346,14 +326,6 @@ CREATE TABLE IF NOT EXISTS `orders` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `item_id`, `quantity`, `unit_price`, `ordered_at`, `user_id`, `is_canceled`) VALUES
-(1, 5, 1, 18.84, '2021-06-06 16:23:00', 4, 1),
-(11, 7, 2, 30, '2021-06-12 14:19:29', 4, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -371,15 +343,6 @@ CREATE TABLE IF NOT EXISTS `orders_log` (
   `delivered_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `orders_log`
---
-
-INSERT INTO `orders_log` (`id`, `item_id`, `user_id`, `quantity`, `total_price`, `ordered_at`, `delivered_at`) VALUES
-(3, 6, 4, 1, 75, '2021-06-06 16:40:01', '2021-06-12 13:39:45'),
-(7, 8, 5, 1, 18.84, '2021-06-12 14:06:21', '2021-06-12 14:08:01'),
-(8, 7, 5, 1, 30, '2021-06-12 14:03:14', '2021-06-12 14:08:01');
 
 --
 -- Triggers `orders_log`
@@ -419,9 +382,8 @@ INSERT INTO `product` (`id`, `name`, `category_id`, `is_hide`, `is_deleted`) VAL
 (4, 'Fried Rice', 5, 0, 0),
 (5, 'Paratha', 5, 0, 0),
 (6, 'Chocolate Bun', 1, 0, 0),
-(7, 'Test Product', 2, 0, 1),
-(8, 'Test Product', 2, 0, 0),
-(9, 'Panadol Card 500g', 7, 0, 0);
+(7, 'Test Product', 2, 0, 0),
+(8, 'Panadol Card 500g', 7, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -459,13 +421,6 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   PRIMARY KEY (`transaction_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `transactions`
---
-
-INSERT INTO `transactions` (`transaction_date`, `total_amount`) VALUES
-('2021-06-15 00:00:00.000000', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -490,14 +445,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `is_deleted`, `mobile`, `name`, `registered_no`, `role_id`, `room_no`) VALUES
-(1, 'admin@fot.lk', 0, '0416537987', 'Administrator FOT', 'ADM01', 1, ''),
-(2, 'owner1@fot.lk', 0, '0764983109', 'Canteen Owner', 'OWN01', 2, NULL),
-(3, 'lecrurer1@fot.lk', 0, '0789056342', 'Lecturer Name 01', 'LCR01', 3, NULL),
-(4, 'tg001@fot.lk', 0, '0752314879', 'Student Name 01', 'TG001', 4, '101'),
-(5, 'tg002@fot.lk', 0, '0723419845', 'Student Name 02', 'TG002', 4, '302'),
-(6, 'tg003@fot.lk', 0, '0769045259', 'Student Name 03', 'TG003', 4, '305'),
-(7, NULL, 0, NULL, 'Student Name 04', 'TG004', 4, NULL),
-(8, NULL, 1, NULL, 'Student Name 05', 'TG005', 4, NULL);
+(1,'ADM01','Administrator FOT','0414567346','admin@fot.com',1,'',0);
 
 --
 -- Triggers `user`
@@ -557,13 +505,24 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 
 DELIMITER $$
 --
--- Events
+-- Events add_daily_transaction_summery
 --
-DROP EVENT `add_daily_transaction_summery`$$
-CREATE DEFINER=`root`@`localhost` EVENT `add_daily_transaction_summery` ON SCHEDULE EVERY 1 DAY STARTS '2021-06-15 23:59:55' ON COMPLETION PRESERVE ENABLE DO INSERT INTO `transactions`(`transaction_date`, `total_amount`) VALUES (DATE(NOW()), calculate_transactions_summery())$$
+CREATE DEFINER=`root`@`localhost` EVENT IF NOT EXISTS `add_daily_transaction_summery` ON SCHEDULE EVERY 1 DAY STARTS '2021-06-15 23:59:55' ON COMPLETION PRESERVE ENABLE DO INSERT INTO `transactions`(`transaction_date`, `total_amount`) VALUES (DATE(NOW()), calculate_transactions_summery())$$
 
 DELIMITER ;
 COMMIT;
+
+
+DELIMITER $$
+--
+-- Events delete_daily_deleted_invemtory
+--
+CREATE DEFINER=`root`@`localhost` EVENT IF NOT EXISTS `delete_daily_deleted_invemtory` ON SCHEDULE EVERY 1 DAY STARTS '2021-06-15 23:59:55' ON COMPLETION PRESERVE ENABLE DO DELETE FROM `inventory` WHERE `is_deleted` = 1$$
+
+DELIMITER ;
+COMMIT;
+
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
